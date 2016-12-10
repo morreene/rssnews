@@ -1,0 +1,4 @@
+django
+newspaper
+feedparser
+django-bootstrap-pagination

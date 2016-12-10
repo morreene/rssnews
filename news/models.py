@@ -11,7 +11,6 @@ class Feed(models.Model):
 		return self.title.encode('utf8')
 
 
-
 class Article(models.Model):
 	feed = models.ForeignKey(Feed)
 	title = models.CharField(max_length=200)
@@ -21,6 +20,7 @@ class Article(models.Model):
 	full = models.TextField()
 	publication_date = models.DateTimeField()
 
+	#def __str__(self):
 	def __str__(self):
 		return self.title.encode('utf8')
 

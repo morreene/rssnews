@@ -70,7 +70,6 @@ def new_feed(request):
 					article.keyword = a.keywords
 					article.full = a.text
 
-
 					d = datetime.datetime(*(entry.published_parsed[0:6]) )
 					dateString = d.strftime('%Y-%m-%d %H:%M:%S')
 
