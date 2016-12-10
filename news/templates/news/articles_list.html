@@ -1,0 +1,80 @@
+{% extends 'news/base.html' %}
+{% load bootstrap_pagination %}
+
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+
+<!-- <div class="container"> -->
+  <!-- Example row of columns -->
+<!--   <ul>
+    {% for article in articles %}
+    <li><h2><a href="{{article.url}}" title="">{{ article.title }}</a></h2></li>
+    <li><p>{{article.description | safe}}</p></li>
+    
+    {% endfor %}
+  </ul>
+ -->
+
+{% for article in articles %}
+
+<div class="bs-example">
+    <h4>{{ article.title }}</h4>
+    <ul>
+        <div class="hashtags"> Feature Tags: <a class="hashtag" href="#">Industrials</a> </div>
+    </ul>
+    <ul class="sent-line">
+        <div id="sent"> 
+          Sentiment: <a href="#">neutral</a> &nbsp;
+          <span id="sentbar">
+            <span id="neg_sent"> -60%</span> 
+            <span id="pos_sent"> +40% </span>
+          </span>&nbsp; &nbsp; &nbsp; 
+        </div>
+    </ul>
+    <div class="summ-box-0">
+        <h5>Summary:</h5>
+        <p>{{article.description | safe | striptags}}</p>
+
+        <h5>Full Article:</h5>
+        <p>{{article.full | safe | striptags  | slice:":300"}}</p>
+
+        <h5>Keywords:</h5>
+        <p>{{article.keyword | safe | striptags }}</p>
+
+    </div>
+    <div class="extract-box">
+      <a target="_blank" class="#" href="{{article.url}}" title="">go to full article</a>
+      <span class="small-lable"> &nbsp;{{article.publication_date}} </span>
+      <div class="mob-line1"></div>
+      <small class="badge" id="news_source">Reuters</small>
+      <span class="sent-line small-lable">&nbsp;13m ago</span>
+    </div>
+    <div>
+        <div id="mob-line">
+
+        </div>
+        <span style="float:right" class="news_slack" id="IqlXnU5Ajc">
+          <span class="glyphicon glyphicon-triangle-right"></span>
+            slack
+          </span>
+          <span style="float:right">&nbsp;&nbsp;</span>
+          <span style="float:right" class="news_dnvote" id="IqlXnU5Ajc">
+            <span class="glyphicon glyphicon-triangle-bottom"></span>
+            trello
+          </span>
+          <span style="float:right">&nbsp;&nbsp;</span>
+          <span style="float:right" class="news_upvote" id="IqlXnU5Ajc">
+            <span class="glyphicon glyphicon-triangle-top"></span>
+            upvote
+          </span>
+    </div>
+</div>
+
+{% endfor %}
+
+<div class="pagination-row text-right">
+    {% bootstrap_paginate articles range=5 %}
+</div>
+
+{% endblock %}

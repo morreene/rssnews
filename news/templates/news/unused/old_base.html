@@ -1,0 +1,4236 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+  <head>
+<!--     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/bloodhound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js"></script>
+ -->  
+    <!-- <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.0/bootstrap-table.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.0/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="tmdr is a smart financial news crawler and aggregator. Read more financial news with much less time and in a smart way.">
+    <meta http-equiv="Refresh" content="3000">
+    <link rel="shortcut icon" href="https://dl.dropboxusercontent.com/u/20130675/sicon.png">
+    <link rel="apple-touch-icon" href="https://dl.dropboxusercontent.com/u/20130675/sicon.png">
+
+
+
+    <script src="https://api.trello.com/1/client.js?key=9a3cc24505a677d8264587c59d657f1d"></script>
+   
+ -->
+
+        
+        <title>tmdr.io(beta)</title>
+
+        <link href="{% static "news/dy.css" %}" rel="stylesheet">         
+<!--   <style>
+
+
+
+    </style>
+ -->
+<!--         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-71154352-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+  -->             
+</head>
+
+
+
+<body>  
+
+  <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <div class="sidebar-brand">
+                   <h3 style="font-weight:bold">
+                        planic.com
+                  </h3>
+                </div>
+                <div>General News
+                  <li>
+                      <a href="/slack.html">slack-bot</a>
+                  </li>
+                  <li>
+                      <a id="home_feeds" href="#">show feeds</a>
+                  </li>
+                  <li>
+                      <a id="home_stats" href="#">show stats</a>
+                  </li>
+
+                </div>
+                <div>&nbsp; &nbsp; &nbsp;</div>
+                <div class="channels">Channels
+                  <li>
+                    <a href="#" style="font-weight:normal" id="add_news_channel">+ add new channel</a>
+                  </li>
+                </div>
+
+                <div>&nbsp; &nbsp; &nbsp;</div>
+                
+                <div> <a id="news_recommend" href="#" >Recommended</a></div>
+                <div> <a id="news_upvoted" href="#" >Upvoted</a></div>
+                <div> <a id="news_dnvoted" href="#">Trello-ed</a></div>
+                
+                      
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="col-sm-12" id="side2">
+     
+            <div class="nav navbar-nav" style="float:right" > 
+              <ul class="nav-ul">
+                  <li id="home">
+                   <span class="glyphicon glyphicon-home"></span>
+                    news
+                  </li>
+                  
+                  <li id="top_tags">
+                  <span class="glyphicon glyphicon-tags"></span>
+                    tags
+                  </li>
+
+
+                 <li id="stats_chart"> 
+                  <span class="glyphicon glyphicon-stats"></span>
+                    pics
+                 </li>
+                 
+                 <li id="top_line"> 
+                  ...
+                 </li>
+                 <li id="info"> 
+                     <span class="glyphicon glyphicon-cog"></span>
+                 </li>
+                 <li id="para_show"> 
+                     <span class="glyphicon glyphicon-resize-full"></span>
+                 </li>
+                 <li id="para_hide"> 
+                     <span class="glyphicon glyphicon-resize-small"></span>
+                 </li>  
+                 <li id="news_sort"> 
+                     <span class="glyphicon glyphicon-sort"></span>
+                 </li>
+                 <li id="the-basics" class="searchbar1" style="color: #000000"  >
+                   <input type="text" class="tt-input form-control typeahead" id="search0" placeholder="Search news">
+                 </li>   
+
+
+                  </ul> 
+              
+              </div> 
+        </div> 
+        
+        
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="add_channel_modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" style='color:#337ab7' id="channel_name">Add New Channel</h4>
+              </div>
+              <div class="modal-body">
+                <p id="channel_conditions">channel conditions: </p>
+                 <input type="text" class="tt-input form-control typeahead" id="add_channel_name" placeholder="type channel name, and press enter"> 
+                 <div class="summ-box" id="channel_conditions"></div>
+                 <div id="the-basics" class="searchbar1" style="color: #000000"  >
+                   <input type="text" class="tt-input form-control typeahead" id="add_channel_conditions" placeholder="add channel conditions, and press enter">
+                 </div>   
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" id="clean_channel">Clear the Data</button>
+                <button type="button" class="btn btn-primary" id="save_channel">Save the Channel</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+ 
+
+
+        <div class="col-sm-8" id="news0">
+            {% block content %}
+            {% endblock %}
+        </div>
+<!--         <div class="col-sm-3" id="side1">
+           
+            <ul id="side0"></ul>
+        </div>
+ -->
+  
+    </div>
+  </div>
+      <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+  
+
+
+    <div class="loader">
+         Loading…
+    </div>
+
+    <div id="mob-search">
+       <span class="glyphicon glyphicon-circle-arrow-left"></span>
+    </div>
+
+    <div id="mob-search1">
+       <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    </div>
+
+
+
+
+
+
+<!-- 
+<script type="text/javascript">//show home news.
+  $(function(){
+    var this_now= Date.now();
+    
+    domain="home";
+    rec_ls=[];
+    page =0;
+    sort="score";
+    source="null";
+    tag="null";
+    sent="null";
+    indus="null";
+    ents="null";
+    Cur_Trello_Board="null";
+    cur_trello_bName="";
+    Cur_Trello_List="null";
+    Cur_Trello_Card="null";
+    cur_channel_name="null";
+
+    cur_slack_channel="null";
+    cur_slack_token="null";
+    cur_slack_iw_url="null";
+    cur_slack_user="null";
+    email_stats_id="null";
+
+    mail_page =0;
+    mail_sort="score"; 
+    mail_source="null";
+    mail_tag="null";
+    mail_sent="null";
+    mail_indus="null";
+    mail_ents="null";
+
+    para="show";
+
+    // set global vars on pages, news type(sents, Tags..) and make below a function taking arguments
+    $("#home").css("font-weight","bold");
+    $("#stats_chart").css("font-weight","normal");
+    $("#top_tags").css("font-weight","normal");
+
+    Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+    //loading_news(key0,val0,sort0,lmt0,page0)
+    loading_news("col","auto","score",20,0);
+
+
+    var news = Parse.Object.extend("link_item");
+    var query = new Parse.Query(news);
+    query.equalTo("col","auto");
+    query.descending("createdAt");
+    query.limit(8);
+    query.find({
+      success: function(results){
+
+
+             var latest_ls = "<div class='extract-box'> <h5>Latest crawled news</h5>"
+             for (var j =0; j<results.length; j++ ){
+
+                var object=results[j];
+          
+                var array_sent = $.map(object.get("sent_score"),function(value,index){
+                    return [value]; 
+                })
+
+
+                var this_ago = new Date();
+                this_ago = object.createdAt;
+                this_ago = (this_now-this_ago)/1000/60;
+               
+                if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                  else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                  else {this_ago=Math.round(this_ago/1440)+'d ago';}
+                var title = object.get('title');
+                if (title.length>100){title=title.substr(0,100)+"..."}
+
+                latest_ls = latest_ls + "<div><a <a target='_blank' href="+object.get('link')+">" + title + "</a></div> <div> <span id='sentbar_tt '><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span> &nbsp&nbsp <span> " + object.get('name') + "&nbsp&nbsp"+this_ago+"</span> " 
+
+             }
+             latest_ls=latest_ls+"</div>"
+             $("#side0").append(latest_ls);
+
+            
+      },
+      error: function(error){
+
+      }
+    });
+
+
+  
+      news_search();
+
+      if (Parse.User.current()){
+         //  $("#top_tags").empty();
+         //  $("#top_tags").append("<span class='glyphicon glyphicon-envelope'></span>&nbsp;mails");
+            
+            load_channels();
+            
+            var currentUser = Parse.User.current();
+            var mails = Parse.Object.extend("email_stats");
+            var query2 = new Parse.Query(mails);
+            query2.equalTo("user",currentUser.id);
+            query2.limit(1);
+            query2.find({
+                  success: function(results) {
+
+                    var object = results[0];
+                    
+                  
+                    Cur_Trello_Board=object.get('trello_board');
+
+                    if (Cur_Trello_Board){
+                      Trello.authorize({
+                          name:"tmdr.io",
+                          type: "popup",
+                          interactive:false,
+                          persist: true,
+                          scope: { read: true, write: true },
+                          expiration: "never"
+                      });
+
+
+                     var success_B_name =  function(successMsg) {cur_trello_bName=successMsg["name"];};
+                     Trello.get('/boards/'+Cur_Trello_Board,success_B_name);
+                    }
+
+                  
+                   
+                  }, 
+                  error: function(error) {
+                    console.log('cannot get trello board');
+                  }
+            });
+      }
+
+
+    
+    
+  });
+</script>
+
+<script type="text/javascript"> // toggle and sort
+ // toggles~~~~~~~~~~~
+    $("#para_hide").click(function(){
+      para="hide";
+
+      if (domain == "tags"){ 
+      $(".top_tag_summ").hide()
+      $("#para_show").show()
+      $("#para_hide").hide()
+      return false;
+      } else{
+      $(".summ-box").hide()
+       $(".summ-box-0").hide()
+
+
+      $("#para_show").show()
+      $("#para_hide").hide()
+      return false;
+
+      }
+
+      
+    });
+
+    $("#para_show").click(function(){
+      para="show";
+      
+      if (domain == "tags"){ 
+      $(".top_tag_summ").show()
+      $("#para_hide").show()
+      $("#para_show").hide()
+      return false;
+      } else {
+      $(".summ-box").show()
+       $(".summ-box-0").hide()
+     
+      $("#para_hide").show()
+      $("#para_show").hide()
+      return false;
+      }
+    
+     
+    });
+
+     
+
+   $("#news_sort").click(function(){
+
+ // email sort~~~~~~~~~~~~~~~~
+
+      if (domain == "mails" && sort == "score"){ 
+        var currentUser = Parse.User.current();
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("sorting by time...");
+        console.log("sorting email by time");
+        sort="createdAt"; //loading_mails(currentUser.id,"tags",this_tag,"score",20,0);
+          if (mail_tag!=="null"){loading_mails(currentUser.id,"tags",mail_tag,sort,20,0);
+          } else if(mail_source!=="null"){loading_mails(currentUser.id,"sender",mail_source,sort,20,0);
+          } else if(mail_sent!=="null"){loading_mails(currentUser.id,"sentiment",mail_sent,sort,20,0);
+          } else if(mail_indus!=="null"){loading_mails(currentUser.id,"indus",mail_indus,sort,20,0);
+          } else if(mail_ents!=="null"){loading_mails(currentUser.id,"ent",mail_ents,sort,20,0);
+          } else {
+            console.log("loading emails");
+            loading_mails(currentUser.id,"","",sort,20,0);}
+       
+        return false;
+      }
+
+      if (domain == "mails" && sort == "createdAt"){ 
+        var currentUser = Parse.User.current();
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("sorting by score...");
+        sort = "score";
+          if (mail_tag!=="null"){loading_mails(currentUser.id,"tags",mail_tag,sort,20,0);
+          } else if(mail_source!=="null"){loading_mails(currentUser.id,"sender",mail_source,sort,20,0);
+          } else if(mail_sent!=="null"){loading_mails(currentUser.id,"sentiment",mail_sent,sort,20,0);
+          } else if(mail_indus!=="null"){loading_mails(currentUser.id,"indus",mail_indus,sort,20,0);
+          } else if(mail_ents!=="null"){loading_mails(currentUser.id,"ent",mail_ents,sort,20,0);
+          } else {loading_mails(currentUser.id,"","",sort,20,0);}
+
+        return false;
+      }
+
+
+ //home sort~~~~~~~~~~~~~~~~~~
+      if (domain == "home" && sort == "score"){ 
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("sorting by time...");
+        sort="createdAt";
+          if (tag!=="null"){loading_news("tags",tag,sort,20,0)
+          } else if(source!=="null"){loading_news("name",source,sort,20,0)
+          } else if(sent!=="null"){loading_news("sentiment",sent,sort,20,0)
+          } else if(indus!=="null"){loading_news("indus",indus,sort,20,0)
+          } else if(ents!=="null"){loading_news("ent",ents,sort,20,0)
+          } else {loading_news("col","auto",sort,20,0)}
+       
+        return false;
+      }
+
+      if (domain == "home" && sort == "createdAt"){ 
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("sorting by score...");
+        sort = "score";
+          if (tag!=="null"){loading_news("tags",tag,sort,20,0)
+          } else if(source!=="null"){loading_news("name",source,sort,20,0)
+          } else if(sent!=="null"){loading_news("sentiment",sent,sort,20,0)
+          } else if(indus!=="null"){loading_news("indus",indus,sort,20,0)
+          } else if(ents!=="null"){loading_news("ent",ents,sort,20,0)
+          } else {loading_news("col","auto",sort,20,0)}
+
+        return false;
+      }
+
+
+ //tags sort~~~~~~~~~~~~~~~~~~
+      if (domain == "tags" && sort == "createdAt"){ 
+       
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("sorting by score...")
+    
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+        var news = Parse.Object.extend("pieces");
+        var query1 = new Parse.Query(news);
+        query1.get("BYbO82GDau", {
+          success: function(query1) {
+            var tags= query1.get("tags");
+            for (var i = 0; i < tags.length; i++){
+             var this_tag = tags[i];
+             $("#news0").append("<div class='bs-example' id=" + this_tag +"> <h4 class='hashtags' id='top_tags_name'> <a>"+ this_tag + "</a> </h4> </div>");
+              loading_tag_news(this_tag,"tags",this_tag,"score",5,0)  
+              }; 
+
+            },
+          error: function(object, error) {
+          }
+        });
+        sort="score";
+        $("#para_show").show();
+        $("#para_hide").hide();
+        para="hide";
+        return false; 
+
+
+      }
+      
+      if (domain == "tags" && sort == "score"){ 
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("sorting by time...")
+
+    
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+        var news = Parse.Object.extend("pieces");
+        var query1 = new Parse.Query(news);
+        query1.get("BYbO82GDau", {
+          success: function(query1) {
+            var tags= query1.get("tags");
+            for (var i = 0; i < tags.length; i++){
+             var this_tag = tags[i];
+             $("#news0").append("<div class='bs-example' id=" + this_tag +"> <h4 class='hashtags' id='top_tags_name'> <a>"+ this_tag + "</a> </h4> </div>");
+              loading_tag_news(this_tag,"tags",this_tag,"createdAt",5,0)  
+              }; 
+
+            },
+          error: function(object, error) {
+          }
+        });
+        sort="createdAt";
+        $("#para_show").show();
+        $("#para_hide").hide();
+        para="hide";
+        return false; 
+      }
+
+      });
+</script>
+
+<script type="text/javascript">//toggle top tag summ-box
+ $(document).on("click", ".glyphicon-th-list",function() {
+    var this_id = $(this).next();
+
+    if(this_id.css('display') == 'none'){ 
+      this_id.show(); 
+    } else { 
+      this_id.hide(); 
+    }
+   
+    return false; 
+
+   });
+
+  $(document).on("click", ".down-down",function() {
+    var this_id = $(this).next();
+
+    if(this_id.css('display') == 'none'){ 
+      this_id.show(); 
+    } else { 
+      this_id.hide(); 
+    }
+   
+    return false; 
+
+   });
+</script>
+  
+<script type="text/javascript">//generic function for loading equalTO news
+      function loading_news(key0,val0,sort0,lmt0,page0){
+        var this_now= Date.now();
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+        var currentUser = Parse.User.current();
+        recm="";
+        if (currentUser) {
+            var rec_item = Parse.Object.extend("recmm_item");
+            var query_rec = new Parse.Query(rec_item);
+            query_rec.equalTo("user",currentUser.id);
+            query_rec.limit(1);
+            query_rec.find({
+               success: function(results) {
+                if (results[0].get('news_rec').length>5){
+                  recm="<div class='news_recommend bs-example'><h4 style='font-weight:bold'>we have some recommendations for you based on your votes</h4> <a style='font-weight:bold' id='news_recommend'>go check</a>  </div>";
+
+                }
+                
+               },
+               error: function(error){
+                 alert(error.messages);
+
+               }
+
+
+            })
+        }
+        
+        var news = Parse.Object.extend("link_item");
+        var query = new Parse.Query(news);
+        query.equalTo(key0,val0);
+        query.descending(sort0);
+        query.limit(lmt0);
+        query.skip(page0 * lmt0);
+        query.find({
+          success: function(results) {
+            for (var i = 0; i < results.length; i++) { 
+              var object = results[i];
+              var array_tags = $.map(object.get("tags"), function(value, index) {
+                  return [value];
+              });
+              var array_sent = $.map(object.get("sent_score"),function(value,index){
+                  return [value]; 
+              })
+              var array_summ = $.map(object.get("summ"),function(value,index){
+                  return [value]; 
+              })
+
+
+              var array_ent = $.map(object.get("ent"), function(value, index) {
+                  return [value];
+              });
+              var array_indus = $.map(object.get("indus"), function(value, index) {
+                  return [value];
+              });
+
+              var hashtags="<div class='hashtags'> Feature Tags:  ";
+              for (var j =0; j<array_tags.length; j++) {
+                hashtags = hashtags+ ("<a class='hashtag' href='#'>" + array_tags[j] + "</a>  ")
+              };
+
+              if (array_ent.length>0){
+
+
+                    
+                    for (var j =0; j<array_indus.length; j++) {
+                      hashtags = hashtags + ("<a class='indus' href='#'>" + array_indus[j] + "</a>  ")
+                    };
+                    for (var j =0; j<array_ent.length; j++) {
+                      hashtags = hashtags + ("<a class='ents' href='#'>" + array_ent[j] + "</a>  ")
+                    };
+              }
+
+              hashtags=hashtags+"</div>";
+
+              var sent="<div id='sent'> Sentiment:  ";
+              if (array_sent[0]>0.74) {sent = sent + ("<a href='#'>" + "bearish" + "</a>  ")}
+              if (array_sent[1]>0.74) {sent = sent + ("<a href='#'>" + "bullish" + "</a>  ")}  
+              if (array_sent[0]<0.74 && array_sent[1]<0.74) {sent = sent + ("<a href='#'>" + "neutral" + "</a>  ")}
+              sent=sent+"&nbsp;<span id='sentbar'><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span>&nbsp; &nbsp; &nbsp; </div>";
+              
+              var summ_true = object.get('summ_true');
+              var summ_len = Math.min(5,array_summ.length);
+              if (summ_true==1) {
+                 var summ ="<div class='summ-box'> <h5>Bullet Summs:</h5>  ";
+                 for (var j =0; j<summ_len; j++) {
+                 summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+                 } 
+                 summ=summ+"</div>";
+              }else {
+                 var summ ="<div class='summ-box-0'> <h5>Bullet Summs:</h5>  ";
+                 for (var j =0; j<summ_len; j++) {
+                 summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+                 }
+                 summ=summ+"</div>";
+              }
+             
+
+              var reading_mins = Math.ceil(String(object.get("text")).length*0.14*0.006);
+
+              var this_ago = new Date();
+              this_ago = object.createdAt;
+              this_ago = (this_now-this_ago)/1000/60;
+             
+              if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                else {this_ago=Math.round(this_ago/1440)+'d ago';}
+              
+ 
+
+      
+              if (i ==4) {
+                  $("#news0").append(recm);
+              }
+
+              $("#news0").append("<div class='bs-example'> <h4>"+object.get("title")+"</h4>"+"</span>\n"+"<ul>" + hashtags+"</ul>"+ "<ul class='sent-line'>" + sent+"</ul>"+summ +"\n"+"<div class='extract-box'>"+"<a target='_blank' class='#' href="+ String(object.get("link")) + "> go to full article" + "</a>"+ "<span class='small-lable'> &nbsp"+reading_mins+" min read in </span><div class='mob-line1'></div>" + "<small class='badge' id='news_source'>" + String(object.get("name")) + "</small><span class='sent-line small-lable'>&nbsp"+this_ago+"</span></div> <div><div id='mob-line'>\n\n\n</div>"+"<span style='float:right' class='news_slack' id="+object.id+" ><span class='glyphicon glyphicon-triangle-right'></span>slack</span>"+ "<span style='float:right' >&nbsp&nbsp</span>"+"<span style='float:right' class='news_dnvote' id="+object.id+" ><span class='glyphicon glyphicon-triangle-bottom'></span>trello</span>"+"<span style='float:right' >&nbsp&nbsp</span>"+"<span style='float:right' class='news_upvote' id="+object.id+" ><span class='glyphicon glyphicon-triangle-top'></span>upvote</span> </div></div>");
+        
+   
+
+
+            }
+              var currentUser = Parse.User.current();
+              if (currentUser) {
+                var email_stats = Parse.Object.extend("email_stats");
+                var query_es = new Parse.Query(email_stats);
+                query_es.equalTo("user",currentUser.id);
+                query_es.find({
+                    success: function(results) {
+
+                        var news_ups =results[0].get('news_ups');
+                        var news_dns =results[0].get('news_dns');
+
+                        $(".news_upvote").each(function(index) {
+                          
+                         
+                           if (news_ups.indexOf($(this).attr('id'))>-1)
+                            {$(this).css('text-decoration','line-through')}
+                        });
+
+                        $(".news_dnvote").each(function() {
+                           if (news_dns.indexOf($(this).attr('id'))>-1)
+                            {$(this).css('text-decoration','line-through')}
+                        });
+
+
+                        var mail_ups =results[0].get('mail_ups');
+                        var mail_dns =results[0].get('mail_dns');
+
+                        $(".mail_upvote").each(function(index) {
+                          
+                         
+                           if (mail_ups.indexOf($(this).attr('id'))>-1)
+                            {$(this).css('text-decoration','line-through')}
+                        });
+
+                        $(".mail_dnvote").each(function() {
+                           if (mail_dns.indexOf($(this).attr('id'))>-1)
+                            {$(this).css('text-decoration','line-through')}
+                        });
+
+                    },
+                    error: function(error){
+                      alert(error.messages);
+                    }
+
+                });
+              }
+            $(".loader").hide();
+            $(".pager").hide();
+
+           
+            if (para =="hide"){
+                $(".summ-box").hide();
+                $(".summ-box-0").hide();
+               
+              } else {
+                $(".summ-box").show();
+                $(".summ-box-0").show();
+               
+              }
+
+            $("#news0").append("<div class='bs-example' data-example-id='simple-pager'> <nav class='waypoint'> <ul class='pager'> <li> <a href='#'>load more</a> </li> </ul> </nav></div>")  
+
+          },
+          error: function(error) {
+            alert("Error: " + error.code + " " + error.message);
+          }
+        });          
+
+      };
+</script>
+
+<script type="text/javascript">//generic function for loading equalTO emails
+    function loading_mails(userID,key0,val0,sort0,lmt0,page0){
+        var this_now= Date.now();
+        var mails = Parse.Object.extend("email_item");
+        var query1 = new Parse.Query(mails);
+        query1.equalTo("user_id",userID);
+        query1.equalTo("summ_true",1);
+        if (key0 !== "") {
+          query1.equalTo(key0, val0);
+        }
+        query1.skip(lmt0*page0);
+        query1.limit(lmt0);
+        query1.descending(sort0);
+        query1.find({
+              success: function(results) {
+                
+                for (var i = 0; i < results.length; i++) { 
+                  var object = results[i];
+                  var array_tags = $.map(object.get("tags"), function(value, index) {
+                      return [value];
+                  });
+                  var array_sent = $.map(object.get("sent_score"),function(value,index){
+                      return [value]; 
+                  })
+                  var array_summ = $.map(object.get("summ"),function(value,index){
+                      return [value]; 
+                  })
+
+
+                  var array_ent = $.map(object.get("ent"), function(value, index) {
+                      return [value];
+                  });
+                  var array_indus = $.map(object.get("indus"), function(value, index) {
+                      return [value];
+                  });
+
+                  var hashtags="<div class='hashtags'> Feature Tags:  ";
+                  for (var j =0; j<array_tags.length; j++) {
+                    hashtags = hashtags+ ("<a class='hashtag_mail' href='#'>" + array_tags[j] + "</a>  ")
+                  };
+
+                  if (array_ent.length>0){
+
+
+                        
+                        for (var j =0; j<array_indus.length; j++) {
+                          hashtags = hashtags + ("<a class='indus_mail' href='#'>" + array_indus[j] + "</a>  ")
+                        };
+                        for (var j =0; j<array_ent.length; j++) {
+                          hashtags = hashtags + ("<a class='ents_mail' href='#'>" + array_ent[j] + "</a>  ")
+                        };
+                  }
+
+                  hashtags=hashtags+"</div>";
+
+                  var sent="<div id='sent_mail'> Sentiment:  ";
+                  if (array_sent[0]>0.74) {sent = sent + ("<a href='#'>" + "bearish" + "</a>  ")}
+                  if (array_sent[1]>0.74) {sent = sent + ("<a href='#'>" + "bullish" + "</a>  ")}  
+                  if (array_sent[0]<0.74 && array_sent[1]<0.74) {sent = sent + ("<a href='#'>" + "neutral" + "</a>  ")}
+                  sent=sent+"&nbsp; <span id='sentbar'><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span>&nbsp; &nbsp; &nbsp; </div>";
+                  
+                  var summ = '';
+                  var summ_len = array_summ.length;
+                  if (summ_len>0) {
+                     var summ ="<div class='summ-box'> <h5>Key Takeaways:</h5>  ";
+                     for (var j =0; j<summ_len; j++) {
+                     summ = summ + ("<p style='padding-left: 10px'>" + array_summ[j] + "</p>  ")
+                     } 
+                     summ=summ+"</div>";
+                  }
+
+                  var fulltext = object.get('text');
+                 
+
+                  var reading_mins = Math.ceil(String(object.get("clean_text")).length*0.14*0.006);
+                  var this_now = Date.now()
+                  var this_ago = new Date();
+                  this_ago = object.createdAt;
+                  this_ago = (this_now-this_ago)/1000/60;
+                 
+                  if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                    else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                    else {this_ago=Math.round(this_ago/1440)+'d ago';}
+
+                  var email_add = "<div class='email_add' style='display: inline-block'><span class='small-lable'>"+"<a id='email_source'>"+ object.get('sender') +"</a> &nbsp; analyzed " +this_ago+"</span></div>";
+
+                  $("#news0").append("<div class='bs-example'>"+email_add+"<h4>"+object.get("subject")+"</h4>"+"</span>\n"+"<ul>" + hashtags+"</ul>"+ "<ul class='sent-line'>" + sent+"</ul>"+summ +"\n"+"<div style='padding-top:15px' class='email_method' id="+object.id+"><a class= 'fullemail' id="+object.id+">Read more</a>&nbsp; "+reading_mins+" min read"+"<a style='float:right; color:#999' class='mail_dnvote' id="+object.id+" ><span class='glyphicon glyphicon-triangle-bottom'></span>trello</a>"+"<span style='float:right' >&nbsp&nbsp</span>"+"<a style='float:right' class='mail_upvote' id="+object.id+" ><span class='glyphicon glyphicon-triangle-top'></span>upvote</a>"+"</div>");
+
+        
+                }
+                var email_stats = Parse.Object.extend("email_stats");
+                var query_es = new Parse.Query(email_stats);
+                query_es.equalTo("user",userID);
+                query_es.find({
+                    success: function(results) {
+
+                        var mail_ups =results[0].get('mail_ups');
+                        
+                        var mail_dns =results[0].get('mail_dns');
+                       
+
+                        $(".mail_upvote").each(function(index) {
+                           if (mail_ups.indexOf($(this).attr('id'))>-1)
+                            {$(this).css('text-decoration','line-through')}
+                        });
+
+                        $(".mail_dnvote").each(function() {
+                           if (mail_dns.indexOf($(this).attr('id'))>-1)
+                            {$(this).css('text-decoration','line-through')}
+                        });
+
+                    },
+                    error: function(error){
+                      alert(error.messages);
+                    }
+
+                });
+                
+                $(".loader").hide();
+                $(".pager").hide();
+
+            if (para =="hide"){
+                $(".summ-box").hide();
+                $(".summ-box-0").hide();
+               
+              } else {
+                $(".summ-box").show();
+                $(".summ-box-0").show();
+               
+              }
+
+            $("#news0").append("<div class='bs-example' data-example-id='simple-pager'> <nav class='mail_waypoint'> <ul class='pager'> <li> <a href='#'>load more</a> </li> </ul> </nav></div>") 
+              },
+              error: function(error) {
+                alert(error.message);
+              }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">//generic function for loading containedIn news
+      function search_news(key0,val0,sort0,lmt0,page0){
+        var this_now= Date.now();
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+        var news = Parse.Object.extend("link_item");
+        var query = new Parse.Query(news);
+        query.containedIn(key0,val0);
+        query.descending(sort0);
+        query.limit(lmt0);
+        query.skip(page0 * lmt0);
+        query.find({
+          success: function(results) {
+            for (var i = 0; i < results.length; i++) { 
+              var object = results[i];
+              var array_tags = $.map(object.get("tags"), function(value, index) {
+                  return [value];
+              });
+              var array_sent = $.map(object.get("sent_score"),function(value,index){
+                  return [value]; 
+              })
+              var array_summ = $.map(object.get("summ"),function(value,index){
+                  return [value]; 
+              })
+
+
+              var array_ent = $.map(object.get("ent"), function(value, index) {
+                  return [value];
+              });
+              var array_indus = $.map(object.get("indus"), function(value, index) {
+                  return [value];
+              });
+
+              var hashtags="<div class='hashtags'> Feature Tags:  ";
+              for (var j =0; j<array_tags.length; j++) {
+                hashtags = hashtags+ ("<a class='hashtag' href='#'>" + array_tags[j] + "</a>  ")
+              };
+
+              if (array_ent.length>0){
+
+
+                    
+                    for (var j =0; j<array_indus.length; j++) {
+                      hashtags = hashtags + ("<a class='indus' href='#'>" + array_indus[j] + "</a>  ")
+                    };
+                    for (var j =0; j<array_ent.length; j++) {
+                      hashtags = hashtags + ("<a class='ents' href='#'>" + array_ent[j] + "</a>  ")
+                    };
+              }
+
+              hashtags=hashtags+"</div>";
+
+              var sent="<div id='sent'> Sentiment:  ";
+              if (array_sent[0]>0.74) {sent = sent + ("<a href='#'>" + "bearish" + "</a>  ")}
+              if (array_sent[1]>0.74) {sent = sent + ("<a href='#'>" + "bullish" + "</a>  ")}  
+              if (array_sent[0]<0.74 && array_sent[1]<0.74) {sent = sent + ("<a href='#'>" + "neutral" + "</a>  ")}
+              sent=sent+"&nbsp;<span id='sentbar'><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span>&nbsp; &nbsp; &nbsp; </div>";
+              
+              var summ_true = object.get('summ_true');
+              var summ_len = Math.min(5,array_summ.length);
+              if (summ_true==1) {
+                 var summ ="<div class='summ-box'> <h5>Bullet Summs:</h5>  ";
+                 for (var j =0; j<summ_len; j++) {
+                 summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+                 } 
+                 summ=summ+"</div>";
+              }else {
+                 var summ ="<div class='summ-box-0'> <h5>Bullet Summs:</h5>  ";
+                 for (var j =0; j<summ_len; j++) {
+                 summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+                 }
+                 summ=summ+"</div>";
+              }
+             
+
+              var reading_mins = Math.ceil(String(object.get("text")).length*0.14*0.006);
+
+              var this_ago = new Date();
+              this_ago = object.createdAt;
+              this_ago = (this_now-this_ago)/1000/60;
+             
+              if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                else {this_ago=Math.round(this_ago/1440)+'d ago';}
+
+              $("#news0").append("<div class='bs-example'> <h4>"+object.get("title")+"</h4>"+"</span>\n"+"<ul>" + hashtags+"</ul>"+ "<ul class='sent-line'>" + sent+"</ul>"+summ +"\n"+"<div class='extract-box'>"+"<a target='_blank' class='#' href="+ String(object.get("link")) + "> go to full article" + "</a>"+ "<span class='small-lable'> &nbsp &nbsp "+reading_mins+" min read in </span>" + "<small class='badge' id='news_source'>" + String(object.get("name")) + "</small><span class='sent-line small-lable'>&nbsp"+this_ago+"</span></div>"+"</div>");
+
+            }
+            $(".loader").hide();
+            $(".pager").hide();
+
+           
+            if (para =="hide"){
+                $(".summ-box").hide();
+               
+              } else {
+                $(".summ-box").show();
+               
+              }
+
+     
+
+          },
+          error: function(error) {
+            alert("something went wrong...pls Refresh");
+          }
+        });          
+
+      };
+</script>
+
+
+<script type="text/javascript">//generic function for loading containedIn emails
+    function searching_mails(userID,key0,val0,sort0,lmt0,page0){
+        var this_now= Date.now();
+        var mails = Parse.Object.extend("email_item");
+        var query1 = new Parse.Query(mails);
+        query1.equalTo("user_id",userID);
+        query1.containedIn(key0,val0);
+        query1.skip(lmt0*page0);
+        query1.limit(lmt0);
+        query1.descending('score');
+        query1.find({
+              success: function(results) {
+                
+                for (var i = 0; i < results.length; i++) { 
+                  var object = results[i];
+                  var array_tags = $.map(object.get("tags"), function(value, index) {
+                      return [value];
+                  });
+                  var array_sent = $.map(object.get("sent_score"),function(value,index){
+                      return [value]; 
+                  })
+                  var array_summ = $.map(object.get("summ"),function(value,index){
+                      return [value]; 
+                  })
+
+
+                  var array_ent = $.map(object.get("ent"), function(value, index) {
+                      return [value];
+                  });
+                  var array_indus = $.map(object.get("indus"), function(value, index) {
+                      return [value];
+                  });
+
+                  var hashtags="<div class='hashtags'> Feature Tags:  ";
+                  for (var j =0; j<array_tags.length; j++) {
+                    hashtags = hashtags+ ("<a class='hashtag_mail' href='#'>" + array_tags[j] + "</a>  ")
+                  };
+
+                  if (array_ent.length>0){
+
+
+                        
+                        for (var j =0; j<array_indus.length; j++) {
+                          hashtags = hashtags + ("<a class='indus_mail' href='#'>" + array_indus[j] + "</a>  ")
+                        };
+                        for (var j =0; j<array_ent.length; j++) {
+                          hashtags = hashtags + ("<a class='ents_mail' href='#'>" + array_ent[j] + "</a>  ")
+                        };
+                  }
+
+                  hashtags=hashtags+"</div>";
+
+                  var sent="<div id='sent_mail'> Sentiment:  ";
+                  if (array_sent[0]>0.74) {sent = sent + ("<a href='#'>" + "bearish" + "</a>  ")}
+                  if (array_sent[1]>0.74) {sent = sent + ("<a href='#'>" + "bullish" + "</a>  ")}  
+                  if (array_sent[0]<0.74 && array_sent[1]<0.74) {sent = sent + ("<a href='#'>" + "neutral" + "</a>  ")}
+                  sent=sent+"&nbsp; <span id='sentbar'><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span>&nbsp; &nbsp; &nbsp; </div>";
+                  
+                  var summ = '';
+                  var summ_len = array_summ.length;
+                  if (summ_len>0) {
+                     var summ ="<div class='summ-box'> <h5>Bullet Summs:</h5>  ";
+                     for (var j =0; j<summ_len; j++) {
+                     summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+                     } 
+                     summ=summ+"</div>";
+                  }
+
+                  var fulltext = object.get('text');
+                 
+
+                  var reading_mins = Math.ceil(String(object.get("text")).length*0.14*0.006);
+                  var this_now = Date.now()
+                  var this_ago = new Date();
+                  this_ago = object.createdAt;
+                  this_ago = (this_now-this_ago)/1000/60;
+                 
+                  if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                    else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                    else {this_ago=Math.round(this_ago/1440)+'d ago';}
+
+                  var email_add = "<div class='email_add' style='display: inline-block'><span class='small-lable'>"+"<a id='email_source'>"+ object.get('sender') +"</a> &nbsp; mailed " +this_ago+"</span></div>";
+
+                  $("#news0").append("<div class='bs-example'>"+email_add+"<h4>"+object.get("subject")+"</h4>"+"</span>\n"+"<ul>" + hashtags+"</ul>"+ "<ul class='sent-line'>" + sent+"</ul>"+summ +"\n"+"<div style='padding-top:15px' class='email_method' id="+object.id+"><a class= 'fullemail' id="+object.id+">Read more</a>&nbsp; "+reading_mins+" min read without noise"+"</div>");
+        
+                }
+                $(".loader").hide();
+              },
+              error: function(error) {
+                alert(error.message);
+              }
+        });
+    }
+
+</script>
+
+
+<script type="text/javascript">//generic function for loading top tag news
+      function loading_tag_news(elem0,key0,val0,sort0,lmt0,page0){
+        var this_now= Date.now();
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+        var news = Parse.Object.extend("link_item");
+        var query = new Parse.Query(news);
+        query.equalTo(key0,val0);
+        query.descending(sort0);
+        query.limit(lmt0);
+        query.skip(page0 * lmt0);
+        query.find({
+          success: function(results) {
+            for (var i = 0; i < results.length; i++) { 
+              var object = results[i];
+              var array_tags = $.map(object.get("tags"), function(value, index) {
+                  return [value];
+              });
+              var array_sent = $.map(object.get("sent_score"),function(value,index){
+                  return [value]; 
+              })
+              var array_summ = $.map(object.get("summ"),function(value,index){
+                  return [value]; 
+              })
+
+
+              var hashtags="<span class='hashtags'>";
+              for (var j =0; j<array_tags.length; j++) {
+                hashtags = hashtags+ ("<a href='#'>" + array_tags[j] + "</a>  ")
+              };
+              hashtags=hashtags+"</span>";
+
+              var sent="<span id='sent'>";
+              sent=sent+"<span id='sentbar_tt'><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span> </span> ";
+
+              var summ_len = Math.min(5,array_summ.length)
+              var summ ="<div class='summ-box'> <h5>Bullet Summs:</h5>  ";
+              for (var j =0; j<summ_len; j++) {
+                summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+              };
+              summ=summ+"</div>";
+
+              var reading_mins = Math.ceil(String(object.get("text")).length*0.14*0.006);
+
+              var this_ago = new Date();
+              this_ago = object.createdAt;
+              this_ago = (this_now-this_ago)/1000/60;
+             
+              if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                else {this_ago=Math.round(this_ago/1440)+'d ago';}
+
+              var this_elem = "#" + elem0
+              var this_summ_id = object.get('link')
+
+              $(this_elem).append("<div class='top_tags_line' > <span class='top_tags_title'>"+object.get("title")+"&nbsp </span> <div id='mob-line'>\n</div>"+sent+"\n"+ "<span class='small-lable_tt'> &nbsp &nbsp "+reading_mins+" min read in </span>" +  "<a target='_blank' href="+object.get('link')+">&nbsp<span class='glyphicon glyphicon-link'></span></a><span class='sent-line small-lable_tt'>&nbsp"+this_ago+"</span><span class='mob-line1'>&nbsp&nbsp&nbsp</span> &nbsp&nbsp <span class='glyphicon glyphicon-th-list'></span> <div class='top_tag_summ'>" + summ + "&nbsp news crawled from <small class='badge' id='news_source'>" + String(object.get("name")) +"</small> </div> </div>")
+            }
+            $(".loader").hide();
+          
+           
+
+          },
+          error: function(error) {
+            alert("Error: " + error.code + " " + error.message);
+          }
+        });          
+
+      };
+</script>  
+
+<script type="text/javascript">//show mail or top tag
+ $(document).on("click", "#top_tags",function() {
+    
+    $("#home").css("font-weight","normal");
+    $("#stats_chart").css("font-weight","normal");
+    $("#top_tags").css("font-weight","bold");
+    $("#news0").empty();
+    $("#side0").empty();
+
+    $(".loader").show();
+    $(".loader").text("loading...");
+    var currentUser = Parse.User.current();
+    if (currentUser){
+      
+      top_tags();
+    }
+    else {
+      top_tags();
+
+   //load top tag page
+    }
+
+  return false; 
+  });
+
+function email_page(currentUser){
+     $("#news0").empty();
+     $("#news0").append( "<h5 style='color: #337ab7; font-weight:bold'> page for your parsed emails <div> or you can view news by tags <a id='top_tags_in_mails'>here</a></div> </h5>");
+
+        domain="mails";
+        mail_tag="null";
+        mail_sent="null";
+        mail_source="null";
+        mail_indus="null";
+        mail_ents="null";
+        mail_page=0;
+        mail_sort="score";
+       Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+       var email_stats = Parse.Object.extend("email_stats");
+       var query1 = new Parse.Query(email_stats);
+       query1.equalTo("user",currentUser.id);
+       query1.find({
+          success: function(results) {
+            if (results[0].get('mail_count')<3){
+
+             $("#news0").append("<div class='extract-box head_stats' style='display:inline-block'> <h5>You do NOT have enough emails</h5><p>check out our Outlook API to allow us analyse more of your emails. It's in the settings page. </p> <p> See below screenshots of our demo email page. </p> <p> <img src='https://dl.dropboxusercontent.com/u/20130675/email.png' alt='email_sample1' style='max-width:90%;max-height:90%;'> </img> </p> <p> <img src='https://dl.dropboxusercontent.com/u/20130675/email_1.png' alt='email_sample1' style='max-width:90%;max-height:90%;'> </img> </p> <h4>Pls contact us via contact@tmdr.io </h4></div>");
+             $(".loader").hide();
+            } else {
+              $("#news0").append("<div class='extract-box head_stats' style='display:inline-block'> <h5>Your Email by Tags</h5> <canvas id='myChart00' width='350' height='300'></canvas> </div>");
+  
+              $("#news0").append("<div class='extract-box head_stats' style='display:inline-block'> <h5>Market news by Tags</h5> <canvas id='myChart01' width='350' height='300'></canvas> </div>");
+
+              $("#news0").append("<div class='extract-box head_stats'> <h5>Your Email Stats Snapshot</h5> <table id='email_table'  data-minimum-count-columns='2' ></table> </div>");  
+              
+  
+
+              var email_array =results[0].get('senders');
+  
+              var ls = Math.min(4,email_array.length);
+              var email_ls = "<div class='extract-box'> <h5>selected email senders stats</h5>"
+              for (var j =0; j<ls; j++ ){
+                var array_sent =[email_array[j][1]*0.01,1-email_array[j][1]*0.01];
+                
+                email_ls = email_ls + "<div class='email_add'><a id='email_source'>" + email_array[j][0] + "</a></div> <div> <span id='sentbar_tt '><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span> &nbsp&nbsp <span>#" + Math.round(email_array[j][3])+"</span>  &nbsp&nbsp <span> score: " +  Math.round(email_array[j][2])+"</span>" 
+
+              }
+               email_ls=email_ls+"</div>"
+               $("#side0").append(email_ls);
+               var data_arr = results[0].get('tags')
+               $("#side0").append(" <div class='extract-box''><ul><h5>Featured Tags</h5></ul><ul class='hashtags'><a class='hashtag_mail' href='#'>" + data_arr[0][0] + "</a>&nbsp; &nbsp;<a class='hashtag_mail' href='#'>" + data_arr[0][1] + "</a>&nbsp; &nbsp;<a class='hashtag_mail' href='#'>" + data_arr[0][2] + "</a></ul><ul class='hashtags'><a class='hashtag_mail' href='#'>" + data_arr[0][3] + "</a>&nbsp; &nbsp;<a class='hashtag_mail' href='#'>" + data_arr[0][4] + "</a>&nbsp; &nbsp;<a class='hashtag_mail' href='#'>" + data_arr[0][5] + "</a></ul><ul class='hashtags'><a class='hashtag_mail'  href='#'>" + data_arr[0][6] + "</a>&nbsp; &nbsp;<a class='hashtag_mail' href='#'>" + data_arr[0][7] + "</a>&nbsp; &nbsp;<a class='hashtag_mail' href='#'>" + data_arr[0][8] + "</a></ul></div>")
+               var data_arr2 = results[0].get('ents')
+               $("#side0").append(" <div class='extract-box''><ul><h5>Mentioned Companies</h5></ul><ul class='hashtags'><a class='ents_mail' href='#'>" + data_arr2[0][0] + "</a>&nbsp; &nbsp;<a class='ents_mail' href='#'>" + data_arr2[0][1] + "</a>&nbsp; &nbsp;<a class='ents_mail' href='#'>" + data_arr2[0][2] + "</a></ul><ul class='hashtags'><a class='ents_mail' href='#'>" + data_arr2[0][3] + "</a>&nbsp; &nbsp;<a class='ents_mail' href='#'>" + data_arr2[0][4] + "</a>&nbsp; &nbsp;<a class='ents_mail' href='#'>" + data_arr2[0][5] + "</a></ul><ul class='hashtags'><a class='ents_mail' href='#'>" + data_arr2[0][6] + "</a>&nbsp; &nbsp;<a class='ents_mail' href='#'>" + data_arr2[0][7] + "</a>&nbsp; &nbsp;<a class='ents_mail' href='#'>" + data_arr2[0][8] + "</a></ul></div>")
+
+              // rebuilt search :: email_search(senders,tags,ents,indus)
+              var email_array_ls=[];
+              for (var kk =0; kk<email_array.length; kk++){
+                email_array_ls.push(email_array[kk][0]);
+              }
+              email_search(email_array_ls,data_arr[0],data_arr2[0],results[0].get('indus')[0]);
+            
+                data_arr.push([]);
+                for (var c=0; c<data_arr[0].length; c++){
+                  data_arr[4][c] = 100- data_arr[1][c];
+                }
+
+                var data_tags = {
+                    labels: data_arr[0],
+                     datasets: [
+                        {
+                            label: "Positive Sentiment",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: data_arr[4]
+                        },
+                        {
+                            label: "Negative Sentiment",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: data_arr[1]
+                        },
+                        {
+                         
+                            label: "Trending Score",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "#FDB45C",
+                            pointColor: "#FDB45C",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#FDB45C",
+                            data: data_arr[3]
+                        }
+                    ]
+                };
+                var ctx_tags = $("#myChart00").get(0).getContext("2d");
+                var myChart_tags = new Chart(ctx_tags).Radar(data_tags, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"});
+
+                var pieces = Parse.Object.extend("pieces");
+                var query3 = new Parse.Query(pieces);
+                query3.get("J1VdwDeynl", {
+                  success: function(query3) {  
+                    var data_arr1 = query3.get('tags');            
+
+                    var data_tags2 = {
+                        labels: data_arr1[0],
+                         datasets: [
+                            {
+                                label: "Positive Sentiment",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: data_arr1[2]
+                            },
+                            {
+                                label: "Negative Sentiment",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: data_arr1[1]
+                            },
+                            {
+                             
+                                label: "Trending Score",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "#FDB45C",
+                                pointColor: "#FDB45C",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "#FDB45C",
+                                data: data_arr1[3]
+                            }
+                        ]
+                    };
+                    var ctx_tags2 = $("#myChart01").get(0).getContext("2d");
+                    var myChart_tags2 = new Chart(ctx_tags2).Radar(data_tags2, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"});
+
+
+                    var ls1 = Math.min(8,email_array.length);
+                    var table_data = [];
+                    for (var j=0; j<ls1; j++){
+                          var myObj ={};
+                          myObj['sender']= email_array[j][0];
+                          myObj['count']= email_array[j][3];
+                          myObj['sentiment']= email_array[j][1];
+                          myObj['score']=Math.round(email_array[j][2]);
+                         // var myJson = JSON.stringify(myObj);
+                          table_data.push(myObj);
+                      }
+                   
+
+
+                  
+                      function operateFormatter(value, row, index) {
+                          return [
+                          "<div>&nbsp; <span id='sentbar'><span id='neg_sent'> -" + value + "%</span> <span id='pos_sent'> +" +(100-value) + "% </span></span>&nbsp; &nbsp; &nbsp; </div>"
+                              
+                          ].join('');
+                      }
+
+                    var $email_table = $('#email_table');
+                    $email_table.bootstrapTable({
+                       
+                        columns: [
+                            [
+                                {
+                                    field: 'sender',
+                                    title: 'Selected Sender',
+                                    rowspan: 2,
+                                    align: 'center',
+                                    valign: 'middle',
+                                    sortable: true
+                                    //footerFormatter: totalTextFormatter
+                                }, {
+                                    title: 'email stats',
+                                    colspan: 3,
+                                    align: 'center'
+                                }
+                            ],
+                            [
+                                {
+                                    field: 'count',
+                                    title: '# of emails',
+                                    sortable: true,
+                                    //editable: true,
+                                    //footerFormatter: totalNameFormatter,
+                                    align: 'center'
+                                }, {
+                                    field: 'score',
+                                    title: 'Score',
+                                    sortable: true,
+                                    align: 'center'
+                        
+                                }, {
+                                    field: 'sentiment',
+                                    title: 'Sentiment',
+                                    sortable: true,
+                                    align: 'center',
+                                    formatter: operateFormatter
+                        
+                                }
+                            ]
+                        ],
+
+                       data: table_data
+
+                    });
+      
+
+
+
+                  },
+                  error: function(error){
+                     alert('something went wrong');
+                  }
+                });
+
+                loading_mails(currentUser.id,"","","score",20,0);
+
+
+
+            }
+
+
+
+
+
+           },
+           error: function(error){
+             alert('something went wrong');
+           }
+
+        });
+    
+}
+
+function top_tags(){
+  
+   domain="tags";    
+    $("#home").css("font-weight","normal");
+    $("#stats_chart").css("font-weight","normal");
+    $("#top_tags").css("font-weight","bold");
+    $("#news0").empty();
+    $("#news0").append( "<h5 style='color: #337ab7; font-weight:bold'> page for news by top tags  </h5>");
+     
+    $(".loader").show();
+    $(".loader").text("loading...");
+    Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+    var news = Parse.Object.extend("pieces");
+    var query1 = new Parse.Query(news);
+    query1.get("BYbO82GDau", {
+      success: function(query1) {
+        var tags= query1.get("tags");
+        for (var i = 0; i < tags.length; i++){
+         var this_tag = tags[i];
+         $("#news0").append("<div class='bs-example' id=" + this_tag +"> <h4 class='hashtags' id='top_tags_name'> <a>"+ this_tag + "</a> </h4> </div>");
+          loading_tag_news(this_tag,"tags",this_tag,"score",5,0)  
+          }; 
+
+        },
+      error: function(object, error) {
+      }
+    });
+     $("#para_show").show()
+     $("#para_hide").hide()
+    return false; 
+}
+
+$(document).on("click", "#mails_in_mails",function() {
+  console.log("111");
+    var currentUser = Parse.User.current();
+    if (currentUser){
+      email_page(currentUser);
+    }
+});
+
+$(document).on("click", "#top_tags_in_mails",function() {
+   top_tags();
+});
+
+
+$(document).on("click", "#mob-search",function() {
+  
+   $("#mob-search").hide();
+      $("#mob-search1").show();
+   $('#sidebar-wrapper').css("width","0");
+
+}); 
+
+$(document).on("click", "#mob-search1",function() {
+  $("#mob-search1").hide();
+      $("#mob-search").show();
+     
+  $('#sidebar-wrapper').css("width","70%");
+
+}); 
+ 
+
+
+</script>
+
+<script type="text/javascript">// show recommandations, upvoted, trelloed
+  $(document).on("click", "#news_recommend",function() {
+      domain="news_recommend";
+      $("#news0").empty();
+      var userID = Parse.User.current().id;
+      var rec_item = Parse.Object.extend("recmm_item");
+      var query_rec = new Parse.Query(rec_item);
+      query_rec.equalTo("user",userID);
+      query_rec.descending("createdAt");
+      query_rec.limit(1);
+      query_rec.find({
+         success: function(results) {
+
+            var obj0 = results[0];
+            rec_ls = obj0.get('news_rec');
+            page =0;
+            var rec_len = Math.min(rec_ls.length,10);
+            for (var i=0; i<rec_len; i++){
+             
+              loading_news('objectId',rec_ls[i],'createdAt',10,0);
+            }
+           
+            //loading_news(key0,val0,sort0,lmt0,page0)
+
+
+         },
+         error: function(error){
+           alert(error.messages);
+
+         }
+
+
+      })
+
+
+  });
+
+   $(document).on("click", "#news_upvoted",function() {
+      domain="news_upvoted";
+      $("#news0").empty();
+      var userID = Parse.User.current().id;
+      var rec_item = Parse.Object.extend("email_stats");
+      var query_rec = new Parse.Query(rec_item);
+      query_rec.equalTo("user",userID);
+      query_rec.descending("createdAt");
+      query_rec.limit(1);
+      query_rec.find({
+         success: function(results) {
+
+            var obj0 = results[0];
+            rec_ls = obj0.get('news_ups');
+            page =0;
+            var rec_len = Math.min(rec_ls.length,10);
+            for (var i=0; i<rec_len; i++){
+              
+              loading_news('objectId',rec_ls[i],'createdAt',10,0);
+            }
+           
+            //loading_news(key0,val0,sort0,lmt0,page0)
+
+
+         },
+         error: function(error){
+           alert(error.messages);
+
+         }
+
+
+      })
+
+
+  });
+
+  $(document).on("click", "#news_dnvoted",function() {
+      domain="news_dnvoted";
+      $("#news0").empty();
+      var userID = Parse.User.current().id;
+      var rec_item = Parse.Object.extend("email_stats");
+      var query_rec = new Parse.Query(rec_item);
+      query_rec.equalTo("user",userID);
+      query_rec.descending("createdAt");
+      query_rec.limit(1);
+      query_rec.find({
+         success: function(results) {
+
+            var obj0 = results[0];
+            rec_ls = obj0.get('news_dns');
+            page =0;
+            var rec_len = Math.min(rec_ls.length,10);
+            for (var i=0; i<rec_len; i++){
+             
+              loading_news('objectId',rec_ls[i],'createdAt',10,0);
+            }
+           
+            //loading_news(key0,val0,sort0,lmt0,page0)
+
+
+         },
+         error: function(error){
+           alert(error.messages);
+
+         }
+
+
+      })
+
+
+  });
+</script>
+
+<script type="text/javascript"> //add news channel function
+  $(document).on("click", ".load_this_channel a",function(){
+      cur_channel_name = $(this).text();
+      $("#news0").empty();
+      load_this_channel_news(cur_channel_name,page,20);
+          
+  });
+
+function load_this_channel_news(cur_channel_name,page0,lmt0){
+    domain="channel_news";
+    page=page0;
+    
+     $(".loader").show();
+     $(".loader").text("loading...");
+  
+    
+     
+      var channel_conditions =[];
+      var query_res = [];
+      
+      for (var i=0; i < cur_channels.length; i++)
+      {
+        if (cur_channels[i]['name']==cur_channel_name){
+          channel_conditions=cur_channels[i]['conditions'];
+          
+        }
+      }
+
+   
+      
+      // constuct a curreny news_list for current channel
+
+       //  news source array:: containedIn
+       //  tags, indus, ents:: containedAll top 20
+       //  then 5 of each tags, indus, ents equal to, if not in news_List
+       //  load more:: contain the function of load channle into this( load_this_channel(page, channel_name, sort)) <== in sort, construc a new thing called curretn channel name, if current channel name !=="", call load_this_channel() ....or abandon sort...defual sort by time...
+       //pannel color
+
+        var news = Parse.Object.extend("link_item");
+      
+        var source_arr=[];
+        var tags_arr=[];
+        var ents_arr=[];
+        var indus_arr =[];
+        var search_arr =[];
+
+        
+        for (var i=0; i< channel_conditions.length; i++){
+
+            var search0_text = channel_conditions[i];
+
+            if (search0_text.charAt(0) == "/"){
+                source_arr.push(search0_text.replace('/',''));
+              }
+              else if (search0_text.charAt(0) == "$"){
+                indus_arr.push(search0_text.replace('$',''));
+              }
+              else if (search0_text.charAt(0) == "@"){
+                ents_arr.push(search0_text.replace('@',''));
+              }
+              else if (search0_text.charAt(0) == "#"){
+                tags_arr.push(search0_text.replace('#',''));
+              }
+              else {    
+                search_arr.push(search0_text);
+              }
+        }
+
+        if (indus_arr.length>0){
+          
+          var query_indus = new Parse.Query(news);
+          query_indus.containedIn("indus",indus_arr);
+        }
+        if (tags_arr.length>0){
+          
+          var query_tags = new Parse.Query(news);
+          query_tags.containedIn("tags",tags_arr);
+        }
+        if (ents_arr.length>0){
+         
+          var query_ents = new Parse.Query(news);
+          query_ents.containedIn("ent",ents_arr);
+        }
+        if (search_arr.length>0){
+          var query_search = new Parse.Query(news);
+          query_search.containsAll("search_text",search_arr);
+        }
+        
+      
+        if (query_search && query_indus && query_tags && query_ents){ // 4 q
+          var main_query = Parse.Query.or(query_search,query_indus,query_tags,query_ents);
+
+        }else if (query_indus && query_tags && query_ents){ // 3 q
+           var main_query = Parse.Query.or(query_indus,query_tags,query_ents);
+    
+        }else if (query_search && query_tags && query_ents){
+          var main_query = Parse.Query.or(query_search,query_tags,query_ents);
+
+        }else if (query_search && query_indus && query_ents){
+          var main_query = Parse.Query.or(query_search,query_indus,query_ents);
+
+        }else if (query_search && query_tags && query_indus){
+          var main_query = Parse.Query.or(query_search,query_tags,query_indus);
+        }
+
+        else if (query_indus && query_tags){ // 2 q
+          var main_query = Parse.Query.or(query_indus,query_tags);
+          
+        } else if (query_ents && query_tags){
+          var main_query = Parse.Query.or(query_ents,query_tags);
+         
+        } else if (query_ents && query_indus){
+          var main_query = Parse.Query.or(query_ents,query_indus);
+        }  
+        else if (query_search && query_tags){ 
+          var main_query = Parse.Query.or(query_search,query_tags);
+          
+        } else if (query_ents && query_search){
+          var main_query = Parse.Query.or(query_ents,query_search);
+         
+        } else if (query_search && query_indus){
+          var main_query = Parse.Query.or(query_search,query_indus);
+
+        } else if (query_indus){
+          var main_query = query_indus;
+         
+        } else if (query_tags){
+          var main_query = query_tags;
+          
+        }else if (query_ents){
+          var main_query = query_ents;
+       
+        }else if (query_search){
+          var main_query = query_search;
+       
+        }
+
+        if (source_arr.length>0){
+          main_query.containedIn("name",source_arr);
+        }
+
+        main_query.descending('score');
+        var d = new Date();
+        var timeNow = d.getTime();
+        var timeThen = timeNow - (1000*60*60*24*30);   // 30d . Time is in milliseconds 
+        var queryDate = new Date();
+        queryDate.setTime(timeThen);
+        main_query.greaterThan("updatedAt", queryDate );
+        main_query.limit(lmt0);
+        main_query.skip(page * lmt0);
+        var results_ids=[];
+        main_query.find({
+            success: function(results) {
+              
+              news_render(results);
+            },
+            error: function(error){}
+          });             
+             
+}
+
+function news_render(results){ // take an array of parse query results and render the page
+    for (var i = 0; i < results.length; i++) { 
+        
+        var object = results[i];
+        
+        var array_tags = $.map(object.get("tags"), function(value, index) {
+            return [value];
+        });
+        var array_sent = $.map(object.get("sent_score"),function(value,index){
+            return [value]; 
+        })
+        var array_summ = $.map(object.get("summ"),function(value,index){
+            return [value]; 
+        })
+
+
+        var array_ent = $.map(object.get("ent"), function(value, index) {
+            return [value];
+        });
+        var array_indus = $.map(object.get("indus"), function(value, index) {
+            return [value];
+        });
+
+      var hashtags="<div class='hashtags'> Feature Tags:  ";
+      for (var j =0; j<array_tags.length; j++) {
+        hashtags = hashtags+ ("<a class='hashtag' href='#'>" + array_tags[j] + "</a>  ")
+      };
+
+        if (array_ent.length>0){
+              
+              for (var j =0; j<array_indus.length; j++) {
+                hashtags = hashtags + ("<a class='indus' href='#'>" + array_indus[j] + "</a>  ")
+              };
+              for (var j =0; j<array_ent.length; j++) {
+                hashtags = hashtags + ("<a class='ents' href='#'>" + array_ent[j] + "</a>  ")
+              };
+        }
+
+        hashtags=hashtags+"</div>";
+
+        var sent="<div id='sent'> Sentiment:  ";
+        if (array_sent[0]>0.74) {sent = sent + ("<a href='#'>" + "bearish" + "</a>  ")}
+        if (array_sent[1]>0.74) {sent = sent + ("<a href='#'>" + "bullish" + "</a>  ")}  
+        if (array_sent[0]<0.74 && array_sent[1]<0.74) {sent = sent + ("<a href='#'>" + "neutral" + "</a>  ")}
+        sent=sent+"&nbsp;<span id='sentbar'><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span>&nbsp; &nbsp; &nbsp; </div>";
+        
+        var summ_true = object.get('summ_true');
+        var summ_len = Math.min(5,array_summ.length);
+        if (summ_true==1) {
+           var summ ="<div class='summ-box'> <h5>Bullet Summs:</h5>  ";
+           for (var j =0; j<summ_len; j++) {
+           summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+           } 
+           summ=summ+"</div>";
+        }else {
+           var summ ="<div class='summ-box-0'> <h5>Bullet Summs:</h5>  ";
+           for (var j =0; j<summ_len; j++) {
+           summ = summ + ("<li>" + array_summ[j] + "</li>  ")
+           }
+           summ=summ+"</div>";
+        }
+       
+
+        var reading_mins = Math.ceil(String(object.get("text")).length*0.14*0.006);
+
+        var this_ago = new Date();
+        this_ago = object.createdAt;
+        var this_now= Date.now();
+        this_ago = (this_now-this_ago)/1000/60;
+       
+        if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+          else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+          else {this_ago=Math.round(this_ago/1440)+'d ago';}
+
+          $("#news0").append("<div class='bs-example'> <h4>"+object.get("title")+"</h4>"+"</span>\n"+"<ul>" + hashtags+"</ul>"+ "<ul class='sent-line'>" + sent+"</ul>"+summ +"\n"+"<div class='extract-box'>"+"<a target='_blank' class='#' href="+ String(object.get("link")) + "> go to full article" + "</a>"+ "<span class='small-lable'> &nbsp"+reading_mins+" min read in </span><div class='mob-line1'></div>" + "<small class='badge' id='news_source'>" + String(object.get("name")) + "</small><span class='sent-line small-lable'>&nbsp"+this_ago+"</span></div> <div><div id='mob-line'>\n\n\n</div>"+"<span style='float:right' class='news_slack' id="+object.id+" ><span class='glyphicon glyphicon-triangle-right'></span>slack</span>"+ "<span style='float:right' >&nbsp&nbsp</span>"+"<span style='float:right' class='news_dnvote' id="+object.id+" ><span class='glyphicon glyphicon-triangle-bottom'></span>trello</span>"+"<span style='float:right' >&nbsp&nbsp</span>"+"<span style='float:right' class='news_upvote' id="+object.id+" ><span class='glyphicon glyphicon-triangle-top'></span>upvote</span> </div></div>");
+    
+    
+
+      }
+
+      var currentUser = Parse.User.current();
+      if (currentUser) {
+          var email_stats = Parse.Object.extend("email_stats");
+          var query_es = new Parse.Query(email_stats);
+          query_es.equalTo("user",currentUser.id);
+          query_es.find({
+              success: function(results) {
+
+                  var news_ups =results[0].get('news_ups');
+                  var news_dns =results[0].get('news_dns');
+
+                  $(".news_upvote").each(function(index) {
+                    
+                   
+                     if (news_ups.indexOf($(this).attr('id'))>-1)
+                      {$(this).css('text-decoration','line-through')}
+                  });
+
+                  $(".news_dnvote").each(function() {
+                     if (news_dns.indexOf($(this).attr('id'))>-1)
+                      {$(this).css('text-decoration','line-through')}
+                  });
+
+
+                  var mail_ups =results[0].get('mail_ups');
+                  var mail_dns =results[0].get('mail_dns');
+
+                  $(".mail_upvote").each(function(index) {
+                    
+                   
+                     if (mail_ups.indexOf($(this).attr('id'))>-1)
+                      {$(this).css('text-decoration','line-through')}
+                  });
+
+                  $(".mail_dnvote").each(function() {
+                     if (mail_dns.indexOf($(this).attr('id'))>-1)
+                      {$(this).css('text-decoration','line-through')}
+                  });
+
+              },
+              error: function(error){
+                alert(error.messages);
+              }
+
+          });
+      }
+
+
+      $(".loader").hide();
+      $(".pager").hide();
+
+     
+      if (para =="hide"){
+          $(".summ-box").hide();
+          $(".summ-box-0").hide();
+         
+        } else {
+          $(".summ-box").show();
+          $(".summ-box-0").show();
+         
+        }
+
+      $("#news0").append("<div class='bs-example' data-example-id='simple-pager'> <nav class='waypoint'> <ul class='pager'> <li> <a href='#'>load more</a> </li> </ul> </nav></div>")  
+
+}
+
+
+  function load_channels(){
+      cur_channels=[];
+      var currentUser = Parse.User.current();
+      var mails = Parse.Object.extend("email_stats");
+      var query2 = new Parse.Query(mails);
+      query2.equalTo("user",currentUser.id);
+      query2.limit(1);
+      query2.find({
+            success: function(results) {
+              var object = results[0];
+
+              email_stats_id=object.id;
+              cur_slack_channel=object.get('slack_channel');
+              cur_slack_token=object.get('slack_token');
+              cur_slack_iw_url=object.get('slack_iw_url');
+              cur_slack_user=object.get('slack_user');
+
+              cur_channels = object.get('channels'); 
+              for (var i =0; i< cur_channels.length; i++){
+                var this_channel= cur_channels[i];
+                var type = "news";
+                if (domain=="mails"){type="email";}
+                if (this_channel['type']==type){
+                  $('.channels').append("<li class='load_this_channel'> <a href='#'>"+this_channel['name']+ "</a> </li>");
+                };
+
+              }
+
+
+             
+            }, 
+            error: function(error) {
+              console.log('cannot load the channels');
+            }
+        });
+
+  };
+
+
+  $(document).on("click", "#add_news_channel",function() {
+      var currentUser = Parse.User.current();
+      if (currentUser){
+       
+          channel_conditions_array=[];
+          channel_name="";
+
+        $('#add_channel_modal').modal();
+
+      } else{
+       
+        alert("you need to log in first");
+      }
+     
+
+  });
+
+
+  $(document).on("click", "#save_channel",function() {
+        
+         
+        var currentUser = Parse.User.current();
+        var mails = Parse.Object.extend("email_stats");
+        var query2 = new Parse.Query(mails);
+        query2.equalTo("user",currentUser.id);
+        query2.limit(1);
+        query2.find({
+              success: function(results) {
+             
+                var object = results[0];
+                var cur_channel = object.get('channels'); 
+                var type = "news";
+                if (domain=="mails"){type="email";}
+                if (!cur_channel){cur_channel=[];}
+                cur_channel.push({"name":channel_name,"conditions":channel_conditions_array,"type":type});
+                object.set('channels',cur_channel);
+                object.save();
+                alert("channel created");
+                $('#channel_name').text("Add New Channel");
+                $('#add_channel_name').val("");
+                $('#add_channel_conditions').val("");
+                $('#channel_conditions').empty();
+                $('#channel_conditions').text("channel conditions: ");
+                $('.load_this_channel').remove();
+                 load_channels();
+                $('#add_channel_modal').modal("hide");
+
+
+               
+              }, 
+              error: function(error) {
+                console.log('cannot save the channel');
+              }
+        });
+
+  });
+
+  $(document).on("click", "#clean_channel",function() {
+        
+
+                $('#channel_name').text("Add New Channel");
+                $('#add_channel_name').val("");
+                $('#add_channel_conditions').val("");
+                $('#channel_conditions').empty();
+                $('#channel_conditions').text("channel conditions: ");
+               
+  });
+
+
+  $('#add_channel_name').keypress(function(e){
+
+      if (e.which==13) { 
+          channel_name = $('#add_channel_name').val();
+          $('#channel_name').text(channel_name);
+          $('#add_channel_name').val("");
+      }
+
+  });
+
+
+  $('#add_channel_conditions').keypress(function(e){
+
+    if (e.which==13) { 
+        var this_channel_condition = $('#add_channel_conditions').val();
+        $('#channel_conditions').append("<span style='color:#337ab7'>"+this_channel_condition+" &nbsp;  </span>");
+        channel_conditions_array.push(this_channel_condition);
+        $('#add_channel_conditions').val("");
+    }
+
+  });
+
+  $(document).on("click", "#channel_settings",function(){
+    
+      channel_settings();
+
+  });
+
+  function channel_settings(){
+      var currentUser = Parse.User.current();
+      var mails = Parse.Object.extend("email_stats");
+      var query2 = new Parse.Query(mails);
+      query2.equalTo("user",currentUser.id);
+      query2.limit(1);
+      query2.find({
+            success: function(results) {
+              var object = results[0];
+              cur_channels = object.get('channels'); 
+              $("#news0").empty();
+              for (var i =0; i< cur_channels.length; i++){
+                  var this_channel= cur_channels[i];
+                  var this_conditions = this_channel["conditions"];
+                  var condition_line = ('<div class="hashtags"><h5>Channel Conditions: </h5></div>');
+                  for (var j =0; j< this_conditions.length; j++){
+                    condition_line+=("<span style='color:#080'>"+this_conditions[j]+"&nbsp&nbsp</span>"); 
+                  }
+                 $("#news0").append("<div class='bs-example delete_channel'> <h3>"+this_channel["name"]+"</h3><a style='float:right'>delete the channel</a>"+"\n"+"<div class='extract-box'>"+condition_line+"</div>" + "</div>");
+                  
+              }
+
+
+             
+            }, 
+            error: function(error) {
+              console.log('cannot load the channels');
+            }
+        });
+  };
+
+
+  $(document).on("click", ".delete_channel a",function(){
+      var this_channel_name = $(this).prev().text();
+     
+      var currentUser = Parse.User.current();
+      var mails = Parse.Object.extend("email_stats");
+      var query2 = new Parse.Query(mails);
+      query2.equalTo("user",currentUser.id);
+      query2.limit(1);
+      query2.find({
+            success: function(results) {
+              var object = results[0];
+              cur_channels = object.get('channels'); 
+              for (var i =0; i< cur_channels.length; i++){
+                if (cur_channels[i]['name']==this_channel_name){
+                  cur_channels.splice(i,1);
+                  object.set('channels',cur_channels);
+                  object.save();
+                  $("#news0").empty();
+                  channel_settings();
+                  $('.load_this_channel').remove();
+                  load_channels();
+                }
+              }
+
+
+
+
+              }, 
+            error: function(error) {
+              console.log('cannot delete the channels');
+            }
+      });
+
+  });
+</script>
+
+
+
+    <script>//show news for this hashtag
+     $(document).on("click", ".hashtag",function() {
+        domain="home";
+        var this_tag = $(this).text();
+        tag=this_tag;
+        sent="null";
+        source="null";
+        indus="null";
+        ents="null";
+        page=0;
+        sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        loading_news("tags",this_tag,sort,20,0)
+        return false; 
+
+       });
+    </script>
+
+    <script>//show mails for this hashtag
+     $(document).on("click", ".hashtag_mail",function() {
+        
+        var this_tag = $(this).text();
+        mail_tag=this_tag;
+        mail_sent="null";
+        mail_source="null";
+        mail_indus="null";
+        mail_ents="null";
+        mail_page=0;
+        mail_sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        var currentUser = Parse.User.current();
+        //loading_mails(userID,key0,val0,sort0,lmt0,page0)
+        loading_mails(currentUser.id,"tags",this_tag,"score",20,0);
+        return false; 
+
+       });
+    </script>
+
+    <script>//show mails for this sentiment
+     $(document).on("click", "#sent_mail a",function() {
+        
+        var this_tag = $(this).text();
+        mail_tag="null";
+        mail_sent=this_tag;
+        mail_source="null";
+        mail_indus="null";
+        mail_ents="null";
+        mail_page=0;
+        mail_sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        var currentUser = Parse.User.current();
+        //loading_mails(userID,key0,val0,sort0,lmt0,page0)
+        loading_mails(currentUser.id,"sentiment",this_tag,"score",20,0);
+        return false; 
+
+       });
+    </script>
+
+    <script>//show news for this sentiment
+     $(document).on("click", "#sent a",function() {
+        domain="home";
+        var this_tag = $(this).text();
+        sent=this_tag;
+        tag="null";
+        source="null";
+        indus="null";
+        ents="null";
+        page=0;
+        sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        loading_news("sentiment",this_tag,sort,20,page)
+        return false; 
+
+       });
+    </script>
+
+
+    <script>//show news in for this news_source /email sender
+     $(document).on("click", "#news_source",function() {
+        domain="home";
+        var this_tag = $(this).text();
+        source=this_tag;
+        sent="null";
+        tag="null";
+        indus="null";
+        ents="null";
+        page=0;
+        sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+       loading_news("name",this_tag,sort,20,page)
+        return false; 
+
+       });
+
+
+      $(document).on("click", "#email_source",function() {
+        
+        var this_tag = $(this).text();
+        mail_tag="null";
+        mail_sent="null";
+        mail_source=this_tag;
+        mail_indus="null";
+        mail_ents="null";
+        mail_page=0;
+        mail_sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        var currentUser = Parse.User.current();
+        //loading_mails(userID,key0,val0,sort0,lmt0,page0)
+        loading_mails(currentUser.id,"sender",this_tag,"score",20,0);
+        return false; 
+
+       });
+    </script>
+
+
+    <script>//show mails for this industry/ents
+     $(document).on("click", ".indus_mail",function() {
+        
+        var this_tag = $(this).text();
+        mail_tag="null";
+        mail_sent="null";
+        mail_source="null";
+        mail_indus=this_tag;
+        mail_ents="null";
+        mail_page=0;
+        mail_sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        var currentUser = Parse.User.current();
+        //loading_mails(userID,key0,val0,sort0,lmt0,page0)
+        loading_mails(currentUser.id,"indus",this_tag,"score",20,0);
+        return false; 
+
+       });
+
+      $(document).on("click", ".ents_mail",function() {
+        
+        var this_tag = $(this).text();
+        mail_tag="null";
+        mail_sent="null";
+        mail_source="null";
+        mail_indus="null";
+        mail_ents=this_tag;
+        mail_page=0;
+        mail_sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        var currentUser = Parse.User.current();
+        //loading_mails(userID,key0,val0,sort0,lmt0,page0)
+        loading_mails(currentUser.id,"ent",this_tag,"score",20,0);
+        return false; 
+
+       });
+    </script>
+
+
+    <script>//show news in for this industry/ents
+      $(document).on("click", ".indus",function() {
+        domain="home";
+        var this_tag = $(this).text();
+        source="null";
+        sent="null";
+        tag="null";
+        indus=this_tag;
+        ents="null";
+        page=0;
+        sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        loading_news("indus",this_tag,sort,20,page)
+        return false; 
+
+       });
+
+      $(document).on("click", ".ents",function() {
+        domain="home";
+        var this_tag = $(this).text();
+        source="null"
+        sent="null";
+        tag="null";
+        indus="null";
+        ents=this_tag;
+        page=0;
+        sort="score";
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        loading_news("ent",this_tag,"score",20,page)
+        return false; 
+
+       });
+    </script>
+
+<script>// show new front charts
+  function home_stats(){  
+    $('#news0').empty();
+
+    Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+    var pieces = Parse.Object.extend("pieces");
+    var query2 = new Parse.Query(pieces);
+    query2.get("J1VdwDeynl", {
+              success: function(query2) {  
+               
+                var data_arr1 = query2.get('tags');            
+                var data_arr2 = query2.get('words');
+                var data_arr3 = query2.get('ents')
+                $("#news0").append("<div class='extract-box head_stats' style='display:inline-block'> <h5>News Impact Snapshot of Industries</h5> <canvas id='myChart01' width='350' height='300'></canvas> </div>");
+
+                $("#news0").append("<div class='extract-box head_stats' style='display:inline-block'> <h5>News Impact Snapshot of Tags</h5> <canvas id='myChart00' width='350' height='300'></canvas> </div>");
+       
+
+                $("#news0").append("<div class='extract-box head_stats' style='display:inline-block'> <h5 id='myChart02_h' >News Impact Snapshot of Companies</h5> <canvas id='myChart02' width='650' height='500'></canvas> </div>");
+                 
+           
+                var data_tags = {
+                    labels: data_arr1[0],
+                     datasets: [
+                        {
+                            label: "Positive Sentiment",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: data_arr1[2]
+                        },
+                        {
+                            label: "Negative Sentiment",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: data_arr1[1]
+                        },
+                        {
+                         
+                            label: "Trending Score",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "#FDB45C",
+                            pointColor: "#FDB45C",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#FDB45C",
+                            data: data_arr1[3]
+                        }
+                    ]
+                };
+                var ctx_ts = $("#myChart00").get(0).getContext("2d");
+                var myChart_ts = new Chart(ctx_ts).Radar(data_tags, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"});
+
+                var data_indus = {
+                    labels: data_arr2[0],
+                     datasets: [
+                        {
+                            label: "Positive Sentiment",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: data_arr2[2]
+                        },
+                        {
+                            label: "Negative Sentiment",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: data_arr2[1]
+                        },
+                        {
+                         
+                            label: "Trending Score",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "#FDB45C",
+                            pointColor: "#FDB45C",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#FDB45C",
+                            data: data_arr2[3]
+                        }
+                    ]
+                };
+                var ctx_indus = $("#myChart01").get(0).getContext("2d");
+                var myChart_indus = new Chart(ctx_indus).Radar(data_indus, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"});
+
+
+
+                var data_ents = {
+                    labels: data_arr3[0],
+                     datasets: [
+                        {
+                            label: "Positive Sentiment",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: data_arr3[2]
+                        },
+                        {
+                            label: "Negative Sentiment",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: data_arr3[1]
+                        },
+                        {
+                         
+                            label: "Trending Score",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "#FDB45C",
+                            pointColor: "#FDB45C",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#FDB45C",
+                            data: data_arr3[3]
+                        }
+                    ]
+                };
+                var ctx_ents = $("#myChart02").get(0).getContext("2d");
+                var myChart_ents = new Chart(ctx_ents).Radar(data_ents, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"}); 
+
+                $(".loader").hide();
+                
+
+
+ 
+      },
+              error: function(error) {
+                     alert("11Error: " + error.message);
+      }
+    });
+
+  };
+</script>
+
+    <script>//back to home
+     $(document).on("click", "#home",function() {
+        domain="home";
+        tag="null";
+        source="null";
+        sent="null";
+        ents="null";
+        indus="null";
+        page=0;
+        sort="score";
+
+        $("#news0").empty();
+        $("#side0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        $("#home").css("font-weight","bold");
+        $("#top_tags").css("font-weight","normal");
+        $("#stats_chart").css("font-weight","normal");
+        loading_news("col","auto",sort,20,0);
+
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+          var news = Parse.Object.extend("link_item");
+          var query = new Parse.Query(news);
+          query.equalTo("col","auto");
+          query.descending("createdAt");
+          query.limit(8);
+          query.find({
+            success: function(results){
+
+
+                   var latest_ls = "<div class='extract-box'> <h5>Latest crawled news</h5>"
+                   for (var j =0; j<results.length; j++ ){
+
+                      var object=results[j];
+                
+                      var array_sent = $.map(object.get("sent_score"),function(value,index){
+                          return [value]; 
+                      })
+
+                      var this_now = Date.now();
+                      var this_ago = new Date();
+                      this_ago = object.createdAt;
+                      this_ago = (this_now-this_ago)/1000/60;
+
+                     
+                      if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                        else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                        else {this_ago=Math.round(this_ago/1440)+'d ago';}
+                      
+
+                      latest_ls = latest_ls + "<div> <a target='_blank' href="+object.get('link')+">" + object.get('title') + "</a></div> <div> <span id='sentbar_tt '><span id='neg_sent'> -" +Math.round(array_sent[0] * 100) + "%</span> <span id='pos_sent'> +" +Math.round(array_sent[1] * 100) + "% </span></span> &nbsp&nbsp <span> " + object.get('name') + "&nbsp&nbsp"+this_ago+"</span> </div>" 
+
+                   }
+                   latest_ls=latest_ls+"</div>"
+                   $("#side0").append(latest_ls);
+
+                  
+            },
+            error: function(error){
+
+            }
+          });
+              
+        news_search();
+        return false; 
+
+      });
+
+
+      $(document).on("click","#home_stats", function(){
+        domain="home";
+        tag="null";
+        source="null";
+        sent="null";
+        ents="null";
+        indus="null";
+        page=0;
+        sort="score";
+
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+
+        home_stats();
+      });
+
+      $(document).on("click","#home_feeds", function(){
+        domain="home";
+        tag="null";
+        source="null";
+        sent="null";
+        ents="null";
+        indus="null";
+        page=0;
+        sort="score";
+
+        $("#news0").empty();
+        $(".loader").show();
+        $(".loader").text("loading...");
+        loading_news("col","auto",sort,20,0);
+
+      });
+    </script>
+
+    <script>//simple words search function
+        $('#search0').keypress(function(e){
+
+          if (e.which==13) { 
+            if(domain!=="mails"){
+             $("#news0").empty();
+              domain="home";
+              tag="null";
+              source="null";
+              sent="null";
+              indus="null";
+              ents="null";
+              sort="score";
+              page=0;
+
+             $(".loader").show();
+             $(".loader").text("searching...");
+              var search0_text = $('#search0').val();
+              if (search0_text.charAt(0) == "/"){
+                source = search0_text.replace('/',''); 
+                loading_news("name",source,sort,20,page);
+              }
+                else if (search0_text.charAt(0) == "$"){
+                  indus=search0_text.replace('$','');
+                  loading_news("indus",indus,sort,20,page);
+                }
+                else if (search0_text.charAt(0) == "@"){
+                  ents=search0_text.replace('@','');
+                  loading_news("ent",ents,sort,20,page); 
+                }
+                else if (search0_text.charAt(0) == "#"){
+                  tag=search0_text.replace('#','');
+                  loading_news("tags",tag,sort,20,page);
+                }
+                else {              
+                 // var toLowerCase = function(w) { return w.toLowerCase(); };
+                  var words = search0_text.toLowerCase().split(" ");
+                  var stopWords = ["the", "in", "and", "a", "of"]
+                 // words = _.filter(words, function(w) { return w.match(/^w+$/) && ! _.contains(stopWords, w); });
+                  alert("full text search function in beta and might take long...you searched for: "+words);  
+                  //var news = Parse.Object.extend("link_item");
+                  search_news("search_text",words,"score",20,page)
+
+                }
+
+
+
+              if ($('#side0').css('display') == "none"){ $('#side1').css("display","none"); }
+              $(".loader").hide();
+              return false; 
+            }
+            else {
+
+              var this_tag = $(this).text();
+              mail_tag="null"
+              mail_sent="null";
+              mail_source="null";
+              mail_indus="null";
+              mail_ents="null";
+              mail_page=0;
+              mail_sort="score";
+              $("#news0").empty();
+              $(".loader").show();
+              $(".loader").text("searching...");
+              var currentUser = Parse.User.current();
+              //loading_mails(userID,key0,val0,sort0,lmt0,page0)
+                var search0_text = $('#search0').val();
+                if (search0_text.charAt(0) == "/"){
+                  mail_source = search0_text.replace('/',''); 
+                  loading_mails(currentUser.id,"sender",mail_source,"score",20,0);
+                  
+                }
+                else if (search0_text.charAt(0) == "$"){
+                  mail_indus=search0_text.replace('$','');
+                  loading_mails(currentUser.id,"indus",mail_indus,"score",20,0);
+                  
+                }
+                else if (search0_text.charAt(0) == "@"){
+                  mail_ents=search0_text.replace('@','');
+                  loading_mails(currentUser.id,"ent",mail_ents,"score",20,0);
+                }
+                else if (search0_text.charAt(0) == "#"){
+                  mail_tag=search0_text.replace('#','');
+                  loading_mails(currentUser.id,"tags",mail_tag,"score",20,0);
+                  
+                }
+                else {              
+                  var toLowerCase = function(w) { return w.toLowerCase(); };
+                  var words = search0_text.split(" ");
+                  var stopWords = ["the", "in", "and", "a", "of"]
+                 // words = _.filter(words, function(w) { return w.match(/^w+$/) && ! _.contains(stopWords, w); });
+                  alert("full text search function in beta and might take long...you searched for: "+words);  
+                  //searching_mails(userID,key0,val0,sort0,lmt0,page0){
+                  searching_mails(currentUser.id,"search_text",words,"score",20,0);
+                }
+
+  
+              return false; 
+            }
+          }
+        });
+    </script>
+
+    
+    <script>// load more news
+     $(document).on("click", ".waypoint",function() {
+
+      $(".pager").text("loading...");
+      page = page +1 ;
+
+
+      if(domain=="news_recommend"){
+        
+        var rec_len = Math.min(rec_ls.length-10*page,10);
+       
+        if (rec_len>0){
+          for (var i=page*10; i<rec_len+page*10; i++){
+            
+            loading_news('objectId',rec_ls[i],'createdAt',10,0);
+          }
+
+        } else{
+          $(".pager").text("no more to show");
+        }
+          
+
+
+      }
+      else if (domain=="news_upvoted"){
+        var rec_len = Math.min(rec_ls.length-10*page,10);
+       
+        if (rec_len>0){
+          for (var i=page*10; i<rec_len+page*10; i++){
+          
+            loading_news('objectId',rec_ls[i],'createdAt',10,0);
+          }
+
+        } else{
+          $(".pager").text("no more to show");
+        }
+          
+      }
+      else if (domain=="news_dnvoted"){
+        var rec_len = Math.min(rec_ls.length-10*page,10);
+       
+        if (rec_len>0){
+          for (var i=page*10; i<rec_len+page*10; i++){
+         
+            loading_news('objectId',rec_ls[i],'createdAt',10,0);
+          }
+
+        } else{
+          $(".pager").text("no more to show");
+        }
+          
+      }
+      else if (domain=="channel_news"){
+        load_this_channel_news(cur_channel_name,page,20);
+
+      }
+      else{
+         if (tag!=="null"){loading_news("tags",tag,sort,20,page)
+          } else if(source!=="null"){loading_news("name",source,sort,20,page)
+          } else if(sent!=="null"){loading_news("sentiment",sent,sort,20,page)
+          } else if(indus!=="null"){loading_news("indus",indus,sort,20,page)
+          } else if(ents!=="null"){loading_news("ent",ents,sort,20,page)
+          } else {loading_news("col","auto",sort,20,page)}
+      }
+      
+         
+          return false;
+         
+          // load more news using paging.....new functions for home && tags && sents && source && search 
+        }); 
+
+
+      $(document).on("click", ".mail_waypoint",function() {
+
+          $(".pager").text("loading...");
+          page = page +1 ;
+          var currentUser = Parse.User.current();
+          if (mail_tag!=="null"){loading_mails(currentUser.id,"tags",tag,sort,20,page);
+          } else if(mail_source!=="null"){loading_mails(currentUser.id,"sender",mail_source,sort,20,page);
+          } else if(mail_sent!=="null"){loading_mails(currentUser.id,"sentiment",mail_sent,sort,20,page);
+          } else if(mail_indus!=="null"){loading_mails(currentUser.id,"indus",mail_indus,sort,20,page);
+          } else if(mail_ents!=="null"){loading_mails(currentUser.id,"ents",mail_ents,sort,20,page);
+          } else {loading_mails(currentUser.id,"","",sort,20,page);}
+          
+            
+
+          return false;
+         
+          // load more news using paging.....new functions for home && tags && sents && source && search 
+        }); 
+    </script>
+
+
+<script type="text/javascript"> //load charts page
+
+     $(document).on("click", "#stats_chart",function() {
+          $("#home").css("font-weight","normal");
+          $("#stats_chart").css("font-weight","bold");
+          $("#top_tags").css("font-weight","normal");
+          $("#news0").empty();
+          $(".loader").show();
+          $(".loader").text("loading...");
+            Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+
+            var pic_item = Parse.Object.extend("pic_item");
+            var query = new Parse.Query(pic_item);
+            query.descending("createdAt");
+            query.limit(80);
+            query.skip(0);
+            query.find({
+             success: function(results) {
+              var thumbnails = "<h5 style='font-weight:bold'>One chart is worth a thousand words, when the words are not efficient. </h5><ul class='thumbnails'>";
+
+              for (var i = 0; i < results.length; i++) {
+                  var object = results[i];
+                  var image=object.get('img');
+                  var img_url = image.url();
+                  var link = object.get('link');
+                  var title = object.get('title');
+                  var source = object.get('source');
+
+                  var this_now = Date.now();
+                  var this_ago = new Date();
+                  this_ago = object.createdAt;
+                  this_ago = (this_now-this_ago)/1000/60;
+                 
+                  if (this_ago < 60){this_ago=Math.round(this_ago)+'m ago';}
+                    else if (this_ago<1440) {this_ago=Math.round(this_ago/60)+'h ago';}
+                    else {this_ago=Math.round(this_ago/1440)+'d ago';}
+
+                  //var image =results[i].get("image").url;
+                  thumbnails = thumbnails+  "<div class='span4'> <div class='thumbnail'><img src="+img_url+" alt=''> <p></p><p><a target='_blank' class='pic_title' style='color: #337ab7; font-weight:bold' href="+ link+">"+title+"</a></p> <div class='sent-line small-lable'>picture crawled from <span style='font-weight:bold'>" + source + "</span><span class='sent-line small-lable'>&nbsp"+this_ago+"</span></div></div><div>";
+                     
+                 }
+                thumbnails=thumbnails+ "</ul>";
+                $("#news0").append(thumbnails);
+              },
+              error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+              }
+            });
+   
+           $(".loader").hide();
+           return false;
+        });
+</script>
+
+
+
+
+    <script>// load stats page
+     $(document).on("click", "#info",function() {
+          $("#home").css("font-weight","normal");
+          $("#top_tags").css("font-weight","normal");
+          $("#news0").empty();
+          $(".loader").show();
+          $(".loader").text("loading...");
+           Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");  
+          var currentUser = Parse.User.current();
+          
+          $("#news0").append("<div>&nbsp;&nbsp;</div><div id='loginDiv'</div>");
+          
+          if (currentUser) {
+          
+            $("#loginDiv").append("<h4>you have logged in as  " + currentUser.getUsername() + "</h4><div class='control-group'> <div class='controls' style='padding-top:5px'> <button id='logout' class='btn btn-success'>Logout</button> </div> <div class='controls' style='padding-top:5px'> <button id='trelloAPI' class='btn btn-success'>Connect to Trello</button></div> <div class='controls' style='padding-top:5px' > <button id='channel_settings' class='btn btn-success'>Channel Settings</button></div> </div>");
+
+            //<div class='controls' style='padding-top:5px' > <button id='outlookAPI' class='btn btn-success'>Outlook API</button></div> 
+            
+            var slack_conn = '<div style="padding-top:5px"></div> <a href="#" class="slack_conn"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>'
+
+
+            $("#loginDiv").append(slack_conn);
+          
+          } else {
+            $("#loginDiv").append("<div class='control-group'> <label class='control-label' for='username'>Email</label> <div class='controls'> <input type='text' id='username' name='username' placeholder='' class='input-xlarge'> </div></div><div class='control-group'> <label class='control-label' for='password'>Password</label> <div class='controls'> <input type='password' id='password' name='password' placeholder='' class='input-xlarge'> </div></div><div class='control-group'> <div class='controls' style='padding-top:5px'> <button id='login' class='btn btn-success'>Login</button> &nbsp;<a id='signup'>sign up</a>&nbsp;/&nbsp;<a id='forgetpass'>forget password</a></div></div>");
+          }
+      
+
+          $("#news0").append(" <div id='short_desc' class='bs-example'> <h5 class='info'>tmdr(too many; didn't read.) is a robot that reads financial news for you.</h5><p>Continuously crawling real-time news pieces from various sources (and your emails if you use our outlook API), the machine filters out duplicated and low-quality contents, puts on feature tags, analyses news sentiments and most importantly makes a smart bullet points extraction/summary to help you get a very quick but good grasp on each news article / email you get without reading the full text. It sorts the news and emails intelligently by scoring each of them, considering how timely, useful and unique they are. Scroll to bottom to see how our machine-learning engines doing these tasks 24/7. </p> Your any opinion/suggestion will be mostly appreciated. you can contact us via contact@tmdr.io </p><h5 class='info'>Having special financial website crawling and/or machine-learning (text processing) needs? feel free to contact us.</h5><h5 class='info'>Next function to be launched: news impacts on managed funds.</h5> <p> Also improving atm: algorithm on email analytics</p></div>");
+ 
+
+
+         
+
+          var pieces3 = Parse.Object.extend("pieces");
+          var query3 = new Parse.Query(pieces3);
+           query3.get("J1VdwDeynl", {
+              success: function(query3) {  
+                Chart.defaults.global.responsive = true;
+                var data_arr1 = query3.get('tags');            
+                var data_arr2 = query3.get('words');
+                var data_arr3 = query3.get('ents')
+
+                $("#news0").append("<div class='extract-box'></div> <h5>News Impact Snapshot of Tags</h5> <canvas id='myChart00' width='400' height='300'></canvas>");
+        
+           
+           
+                var data_tags = {
+                    labels: data_arr1[0],
+                     datasets: [
+                        {
+                            label: "Positive Sentiment",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: data_arr1[2]
+                        },
+                        {
+                            label: "Negative Sentiment",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: data_arr1[1]
+                        },
+                        {
+                         
+                            label: "Trending Score",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "#FDB45C",
+                            pointColor: "#FDB45C",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#FDB45C",
+                            data: data_arr1[3]
+                        }
+                    ]
+                };
+                var ctx_ts = $("#myChart00").get(0).getContext("2d");
+                var myChart_ts = new Chart(ctx_ts).Radar(data_tags, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"});
+              },
+               error: function(query2, error) {
+                alert(error.message);
+              }
+
+          });
+
+
+          var pieces = Parse.Object.extend("public_stats");
+          var query2 = new Parse.Query(pieces);
+          query2.get("pIe6bY1EfT", {
+              success: function(query2) {
+                Chart.defaults.global.responsive = true;
+                $("#news0").append("<h5> Tags-Sentiment for last 100 news </h5> <canvas id='myChart' width='400' height='300'></canvas>");
+                var label_arr =[];
+                var pos_arr = [];
+                var neg_arr =[];
+                var data_arr=query2.get('sents');
+                for (var i=0; i<Math.min(10,data_arr.length); i++){
+                  label_arr[i]=data_arr[i][0];
+                  pos_arr[i]=Math.round(data_arr[i][1]*100);
+                  neg_arr[i]=Math.round(data_arr[i][2]*100);
+                }
+                var data = {
+                  labels: label_arr,
+                  datasets: [
+                      {
+                          label: "positive sentiments",
+                          fillColor: "#bf616a",
+                          strokeColor: "#bf616a",
+                          highlightFill: "#FF8585",
+                          highlightStroke: "#FF8585",
+                          data: pos_arr
+                      },
+                      {
+                          label: "negative sentiments",
+                          fillColor: "#a3be8c",
+                          strokeColor: "#a3be8c",
+                          highlightFill: "#82CC9B",
+                          highlightStroke: "#82CC9B",
+                          data: neg_arr
+                      }
+                  ]
+                };  
+                var ctx = $("#myChart").get(0).getContext("2d");
+                var myBarChart = new Chart(ctx).Bar(data);
+
+                $("#news0").append("<h5>Sentiment time-series for selected risk (pos:bullish neg:bearish)</h5> <canvas id='myChart3' width='400' height='300'></canvas>");
+                
+                var app_arr = query2.get('ts_apple').reverse();
+                var emp_arr = query2.get('ts_emp').reverse();
+                var ene_arr = query2.get('ts_ene').reverse();
+       
+
+                for (var i=0; i<7; i++){
+                  
+                  app_arr[i]=Math.round(app_arr[i]*10);
+                  emp_arr[i]=Math.round(emp_arr[i]*10);
+                  ene_arr[i]=Math.round(ene_arr[i]*10);
+
+                }
+
+       
+           
+                var data_ts = {
+                    labels: ["6Ds ago", "5Ds ago", "4Ds ago", "3Ds ago", "2Ds ago", "1D ago", "Today"],
+                     datasets: [
+                        {
+                            label: "Apple.Inc",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: app_arr
+                        },
+                        {
+                            label: "Employment Sector",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: emp_arr
+                        },
+                        {
+                         
+                            label: "Energy Industry",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "#FDB45C",
+                            pointColor: "#FDB45C",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "#FDB45C",
+                            data: ene_arr
+                        }
+                    ]
+                };
+                var ctx_ts = $("#myChart3").get(0).getContext("2d");
+                var myChart_ts = new Chart(ctx_ts).Line(data_ts, {multiTooltipTemplate:"<%= datasetLabel %> : <%= value %>"});
+
+
+                $("#news0").append("<h5> Time saved for last 100 news </h5> <canvas id='myChart1' width='400' height='300'></canvas>");
+                var mins=query2.get('mins'); 
+                var data_mins = [
+                  {
+                      value: mins[0],
+                      color: "#4D5360",
+                      highlight: "#616774",
+                      label: "Mins on reading the news"
+                  },
+                  {
+                      value: mins[1],
+                      color: "#FDB45C",
+                      highlight: "#FFC870",
+                      label: "Mins on reading the smart summary"
+                  },
+                  {
+                      value: mins[0]-mins[1],
+                      color: "#46BFBD",
+                      highlight: "#5AD3D1",
+                      label: "Mins saved"
+                  }
+    
+                ];
+                var ctx_mins = $("#myChart1").get(0).getContext("2d");
+                var myChart_mins = new Chart(ctx_mins).PolarArea(data_mins);
+
+                $("#news0").append("<h5> Top tags breakdown for latest news </h5> <canvas id='myChart2' width='400' height='300'></canvas>");
+                var occs = query2.get('words');
+                var data_words = [
+                    {
+                        value: occs[1][0],
+                        color:"#bf616a",
+                        highlight: "#616774",
+                        label: occs[0][0]
+                    },
+                    {
+                        value: occs[1][1],
+                        color:"#5B90BF",
+                        highlight: "#616774",
+                        label: occs[0][1],
+                    },
+                    {
+                        value: occs[1][2],
+                        color:"#d08770",
+                        highlight: "#616774",
+                        label: occs[0][2]
+                    },
+                    {
+                        value: occs[1][3],
+                        color:"#ebcb8b",
+                        highlight: "#616774",
+                        label: occs[0][3]
+                    },
+                    {
+                        value: occs[1][4],
+                        color:"#a3be8c",
+                        highlight: "#616774",
+                        label: occs[0][4]
+                    },
+                    {
+                        value: occs[1][5],
+                        color:"#96b5b4",
+                        highlight: "#616774",
+                        label: occs[0][5]
+                    },
+                    {
+                        value: occs[1][6],
+                        color:"#8fa1b3",
+                        highlight: "#616774",
+                        label: occs[0][6]
+                    },
+                    {
+                        value: occs[1][7],
+                        color:"#b48ead",
+                        highlight: "#616774",
+                        label: occs[0][7]
+                    },
+                    {
+                        value: occs[1][8],
+                        color:"#ab7967",
+                        highlight: "#616774",
+                        label: occs[0][8]
+                    }             
+
+                ]; 
+                var ctx_words = $("#myChart2").get(0).getContext("2d");
+                var myChart_words = new Chart(ctx_words).Doughnut(data_words);
+                $("#news0").append("<h5> tmdr(beta) Crawler & Machine Learning Engine flow chart </h5> <p> <img src='https://dl.dropboxusercontent.com/u/20130675/finclr.png' alt='finclr flowchart' style='max-width:100%;max-height:100%;'> </img> </p>");
+
+           
+              },
+              error: function(query2, error) {
+                alert(error.message);
+              }
+
+          });
+          $(".loader").hide();
+          return false;
+         
+          // load more news using paging.....new functions for home && tags && sents && source && search 
+        }); 
+    </script>
+
+    <script type="text/javascript">// user login
+     $(document).on("click", "#login",function() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+        Parse.User.logIn(username, password, {
+          success: function(user) {
+            alert('you logged in successfully');
+          //  $("#top_tags").empty();
+          //  $("#top_tags").append("<span class='glyphicon glyphicon-envelope'></span>&nbsp;mails");
+            currentUser = Parse.User.current();
+            userID = Parse.User.current().id;
+            
+            $("#loginDiv").empty();
+   
+             $("#loginDiv").append("<h4>you have logged in as  " + currentUser.getUsername() + "</h4><div class='control-group'> <div class='controls' style='padding-top:5px'> <button id='logout' class='btn btn-success'>Logout</button> </div><div class='controls' style='padding-top:5px' > <button id='outlookAPI' class='btn btn-success'>See My Outlook API</button></div><div class='controls' style='padding-top:5px' > <button id='trelloAPI' class='btn btn-success'>Connect to Trello</button></div> <div class='controls' style='padding-top:5px' > <button id='channel_settings' class='btn btn-success'>Channel Settings</button></div> </div> </div>");
+            
+              var slack_conn = '<div style="padding-top:5px"></div> <a href="#" class="slack_conn"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>'
+
+            $("#loginDiv").append(slack_conn);
+
+            load_channels();
+
+
+
+          },
+          error: function(user, error) {
+            alert('wrong email or password');
+            // The login failed. Check error to see why.
+          }
+        });
+
+
+      });
+
+
+    $(document).on("click", "#signup",function() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        Parse.initialize("Ot3wHoK1yU2I0L5Ef6I4jL2eM16bbSqzq7LbJWNr", "YeyLXGqaFajgwP3xryDAPRB4exxuSAxYfo15RzPo");
+          var user = new Parse.User();
+          user.set("username", username);
+          user.set("password", password);
+          user.set("email", username);
+
+          user.signUp(null, {
+            success: function(user) {
+              alert("you have signed up successfully.");
+              Parse.User.logIn(username, password, {
+                  success: function(user) {
+                    alert('you logged in successfully');
+               //     $("#top_tags").empty();
+               //     $("#top_tags").append("<span class='glyphicon glyphicon-envelope'></span>&nbsp;mails");
+                    var currentUser = Parse.User.current();
+                    var userID = Parse.User.current().id;
+                    
+                    $("#loginDiv").empty();
+                    $("#loginDiv").append("<div>you have logged in as  " + currentUser.getUsername() + "</div><div class='control-group'> <div class='controls' style='padding-top:5px'> <button id='logout' class='btn btn-success'>Logout</button> </div></div>");
+
+                    var email_stats = Parse.Object.extend("email_stats");
+                    var this_es = new email_stats();
+                    this_es.set("user",userID);
+                    this_es.set("mail_ups",[]);
+                    this_es.set("mail_dns",[]);
+                    this_es.set("news_ups",[]);
+                    this_es.set("news_dns",[]);
+                    this_es.set("mail_count",0);
+                    var this_ACL = new Parse.ACL();
+                    this_ACL.setReadAccess(userID,true);
+                    this_ACL.setReadAccess("cIFO19gwvJ",true);
+                    this_ACL.setWriteAccess(userID,true);
+                    this_ACL.setWriteAccess("cIFO19gwvJ",true);
+                    this_es.setACL(this_ACL);
+                    this_es.save();
+
+
+
+
+
+                  },
+                  error: function(user, error) {
+                    alert('wrong email or password');
+                    // The login failed. Check error to see why.
+                  }
+             });
+            },
+            error: function(user, error) {
+              // Show the error message somewhere and let the user try again.
+              alert("Error: " + error.code + " " + error.message);
+            }
+          });
+         
+      });
+
+
+    $(document).on("click", "#trelloAPI",function() {
+     
+
+      var authenticationSuccess = function() { console.log("Successful authentication"); };
+      var authenticationFailure = function() { console.log("Failed authentication"); };
+      Trello.authorize({
+        type: "popup",
+        name: "tmdr.io",
+        scope: {
+          read: true,
+          write: true },
+        expiration: "never",
+        persist: true,
+        authenticationSuccess,
+        authenticationFailure
+      });
+
+      var $Trello_Boards = $('<div></div>');
+      var success = function(successMsg) {
+        for (var i=0; i<successMsg.length; i++){
+          var strID = successMsg[i]['id'];
+          var strName = successMsg[i]['name'];
+          $Trello_Boards.append("<a class='Trello_Boards' id="+strID+" >"+ strName+" </a><span> ... </span>");
+        }
+
+         BootstrapDialog.show({
+            title: 'choose the board you want to connect:',
+
+            message: $Trello_Boards,
+            buttons:[
+
+                    {
+                      label: 'connect',
+                      action: function(dialogRef){
+                          alert('connected');
+                          dialogRef.close();
+                          
+                          var currentUser = Parse.User.current();
+                          var mails = Parse.Object.extend("email_stats");
+                          var query2 = new Parse.Query(mails);
+                          query2.equalTo("user",currentUser.id);
+                          query2.limit(1);
+                          query2.find({
+                                success: function(results) {
+                               
+                                  var object = results[0];
+                                  object.set('trello_board',Cur_Trello_Board);
+                                  object.save();
+
+                                   var success_B_name =  function(successMsg) {cur_trello_bName=successMsg["name"];};
+                                   Trello.get('/boards/'+Cur_Trello_Board,success_B_name);
+                                
+                                 
+                                }, 
+                                error: function(error) {
+                                  console.log('cannot save trello board');
+                                }
+                          });
+                          
+                         
+                        }
+                  
+                    }
+
+                    ]
+
+         });
+
+      };
+
+      var error = function(errorMsg) {
+        console.log('errorMsg');
+      };
+
+      Trello.get('/member/me/boards', success, error);
+
+
+      });   
+
+       
+      $(document).on("click", ".Trello_Boards",function(){
+         $(".Trello_Boards").css("color", "#55acee");
+         $(this).css("color", "#CE4843");
+         $(this).css("font-weight","bold");
+         Cur_Trello_Board=$(this).attr('id');
+
+      });
+
+
+    $(document).on("click", "#outlookAPI",function() {
+         var currentUser = Parse.User.current();
+         var userID = Parse.User.current().id;
+
+         var codeH='<div>Send an email to io.tmdr@gmail.com and allow one day for us set up your own email server instance, and simply put below codes into you Outlook VBA editor and add the script to your rules, i.e. point any desired emails to the Sub [send_to_bot]. </div> <div>We do this so it is 100% transparent you know what we doing in your outlook(not scanning your other emails), and you decide what our bot can analyse for you.</div> <div> The script works best with your current rules auto-foldering investment related emails, such as investment strategy and/or market comments from banks and/or research house. </div><pre><table data-tab-size="8"> <tbody><tr> <td id="L1" class="blob-num js-line-number" data-line-number="1"></td><td id="LC1" class="blob-code blob-code-inner js-file-line">Sub send_to_bot(item As Outlook.MailItem)</td></tr><tr> <td id="L2" class="blob-num js-line-number" data-line-number="2"></td><td id="LC2" class="blob-code blob-code-inner js-file-line"></td></tr><tr> <td id="L3" class="blob-num js-line-number" data-line-number="3"></td><td id="LC3" class="blob-code blob-code-inner js-file-line"> P_subject <span class="pl-k">=</span> item.Subject <span class="pl-k">&amp;</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span></td></tr><tr> <td id="L4" class="blob-num js-line-number" data-line-number="4"></td><td id="LC4" class="blob-code blob-code-inner js-file-line"> P_subject <span class="pl-k">=</span> Replace(P_subject, <span class="pl-s"><span class="pl-pds">"</span>&amp;<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>finsolrxx<span class="pl-pds">"</span></span>)</td></tr><tr> <td id="L5" class="blob-num js-line-number" data-line-number="5"></td><td id="LC5" class="blob-code blob-code-inner js-file-line"> p_text <span class="pl-k">=</span> item.Body <span class="pl-k">&amp;</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span></td></tr><tr> <td id="L6" class="blob-num js-line-number" data-line-number="6"></td><td id="LC6" class="blob-code blob-code-inner js-file-line"> p_text <span class="pl-k">=</span> Replace(p_text, <span class="pl-s"><span class="pl-pds">"</span>&amp;<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>finsolrxx<span class="pl-pds">"</span></span>)</td></tr><tr> <td id="L7" class="blob-num js-line-number" data-line-number="7"></td><td id="LC7" class="blob-code blob-code-inner js-file-line"> p_html <span class="pl-k">=</span> item.HTMLBody <span class="pl-k">&amp;</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span></td></tr><tr> <td id="L8" class="blob-num js-line-number" data-line-number="8"></td><td id="LC8" class="blob-code blob-code-inner js-file-line"> p_html <span class="pl-k">=</span> Replace(p_html, <span class="pl-s"><span class="pl-pds">"</span>&amp;<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>finsolrxx<span class="pl-pds">"</span></span>)</td></tr><tr> <td id="L9" class="blob-num js-line-number" data-line-number="9"></td><td id="LC9" class="blob-code blob-code-inner js-file-line"> p_sender <span class="pl-k">=</span> item.SenderEmailAddress <span class="pl-k">&amp;</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span></td></tr><tr> <td id="L10" class="blob-num js-line-number" data-line-number="10"></td><td id="LC10" class="blob-code blob-code-inner js-file-line"> p_sender <span class="pl-k">=</span> Replace(p_sender, <span class="pl-s"><span class="pl-pds">"</span>&amp;<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>finsolrxx<span class="pl-pds">"</span></span>)</td></tr><tr> <td id="L11" class="blob-num js-line-number" data-line-number="11"></td><td id="LC11" class="blob-code blob-code-inner js-file-line"> p_user_id <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span id="outlook_id">Your User ID</span><span class="pl-pds">"</span></span></td></tr><tr> <td id="L12" class="blob-num js-line-number" data-line-number="12"></td><td id="LC12" class="blob-code blob-code-inner js-file-line"> p_send_time <span class="pl-k">=</span> item.SentOn</td></tr><tr> <td id="L13" class="blob-num js-line-number" data-line-number="13"></td><td id="LC13" class="blob-code blob-code-inner js-file-line"> p_email_id <span class="pl-k">=</span> p_send_time <span class="pl-k">&amp;</span> <span class="pl-s"><span class="pl-pds">"</span>__<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_sender <span class="pl-k">&amp;</span> <span class="pl-s"><span class="pl-pds">"</span>__<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> P_subject</td></tr><tr> <td id="L14" class="blob-num js-line-number" data-line-number="14"></td><td id="LC14" class="blob-code blob-code-inner js-file-line"> </td></tr><tr> <td id="L15" class="blob-num js-line-number" data-line-number="15"></td><td id="LC15" class="blob-code blob-code-inner js-file-line"> p_email_id <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;email_id=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_email_id</td></tr><tr> <td id="L16" class="blob-num js-line-number" data-line-number="16"></td><td id="LC16" class="blob-code blob-code-inner js-file-line"> p_user_id <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;user_id=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_user_id</td></tr><tr> <td id="L17" class="blob-num js-line-number" data-line-number="17"></td><td id="LC17" class="blob-code blob-code-inner js-file-line"> P_subject <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;subject=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> P_subject</td></tr><tr> <td id="L18" class="blob-num js-line-number" data-line-number="18"></td><td id="LC18" class="blob-code blob-code-inner js-file-line"> p_text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;ftext=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_text</td></tr><tr> <td id="L19" class="blob-num js-line-number" data-line-number="19"></td><td id="LC19" class="blob-code blob-code-inner js-file-line"> p_send_time <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;send_time=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_send_time</td></tr><tr> <td id="L20" class="blob-num js-line-number" data-line-number="20"></td><td id="LC20" class="blob-code blob-code-inner js-file-line"> p_sender <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;sender=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_sender</td></tr><tr> <td id="L21" class="blob-num js-line-number" data-line-number="21"></td><td id="LC21" class="blob-code blob-code-inner js-file-line"> p_html <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&amp;fhtml=<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span> p_html</td></tr><tr> <td id="L22" class="blob-num js-line-number" data-line-number="22"></td><td id="LC22" class="blob-code blob-code-inner js-file-line"> </td></tr><tr> <td id="L23" class="blob-num js-line-number" data-line-number="23"></td><td id="LC23" class="blob-code blob-code-inner js-file-line"> Argstr <span class="pl-k">=</span> p_email_id <span class="pl-k">&amp;</span> p_user_id <span class="pl-k">&amp;</span> P_subject <span class="pl-k">&amp;</span> p_text <span class="pl-k">&amp;</span> p_send_time <span class="pl-k">&amp;</span> p_sender <span class="pl-k">&amp;</span> p_html</td></tr><tr> <td id="L24" class="blob-num js-line-number" data-line-number="24"></td> <tr> <td id="L29" class="blob-num js-line-number" data-line-number="29"></td><td id="LC29" class="blob-code blob-code-inner js-file-line"></td></tr><tr> <td id="L30" class="blob-num js-line-number" data-line-number="30"></td><td id="LC30" class="blob-code blob-code-inner js-file-line"> Dim <span class="pl-c1">XMLHTTP</span></td></tr><tr> <td id="L31" class="blob-num js-line-number" data-line-number="31"></td><td id="LC31" class="blob-code blob-code-inner js-file-line"> Set <span class="pl-c1">XMLHTTP</span> <span class="pl-k">=</span> CreateObject(<span class="pl-s"><span class="pl-pds">"</span>MSXML2.XMLHTTP.6.0<span class="pl-pds">"</span></span>)</td></tr><tr> <td id="L32" class="blob-num js-line-number" data-line-number="32"></td><td id="LC32" class="blob-code blob-code-inner js-file-line"> <span class="pl-c1">XMLHTTP</span>.Open <span class="pl-s"><span class="pl-pds">"</span>POST<span class="pl-pds">"</span></span>, _</td></tr><tr> <td id="L33" class="blob-num js-line-number" data-line-number="33"></td><td id="LC33" class="blob-code blob-code-inner js-file-line"> <span class="pl-s"><span class="pl-pds">"</span>http://103.3.60.169/api/outlook<span class="pl-pds">"</span></span>, False</td></tr><tr> <td id="L34" class="blob-num js-line-number" data-line-number="34"></td><td id="LC34" class="blob-code blob-code-inner js-file-line"> <span class="pl-c1">XMLHTTP</span>.SetRequestHeader <span class="pl-s"><span class="pl-pds">"</span>User-Agent<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)<span class="pl-pds">"</span></span></td></tr><tr> <td id="L35" class="blob-num js-line-number" data-line-number="35"></td><td id="LC35" class="blob-code blob-code-inner js-file-line"> <span class="pl-c1">XMLHTTP</span>.SetRequestHeader <span class="pl-s"><span class="pl-pds">"</span>Content-type<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>application/x-www-form-urlencoded<span class="pl-pds">"</span></span></td></tr><tr> <td id="L36" class="blob-num js-line-number" data-line-number="36"></td><td id="LC36" class="blob-code blob-code-inner js-file-line"> <span class="pl-c1">XMLHTTP</span>.Send (Argstr)</td></tr><tr> <td id="L37" class="blob-num js-line-number" data-line-number="37"></td><td id="LC37" class="blob-code blob-code-inner js-file-line"> result <span class="pl-k">=</span> <span class="pl-c1">XMLHTTP</span>.responseText</td></tr><tr> <td id="L38" class="blob-num js-line-number" data-line-number="38"></td><td id="LC38" class="blob-code blob-code-inner js-file-line"> Set <span class="pl-c1">XMLHTTP</span> <span class="pl-k">=</span> Nothing</td></tr><tr> <td id="L39" class="blob-num js-line-number" data-line-number="39"></td><td id="LC39" class="blob-code blob-code-inner js-file-line"></td></tr><tr> <td id="L40" class="blob-num js-line-number" data-line-number="40"></td><td id="LC40" class="blob-code blob-code-inner js-file-line">End Sub</td></tr></tbody><table></pre>'
+          $('#short_desc').before(codeH);
+          $("#outlook_id").text(userID);
+       
+      });
+
+    $(document).on("click", "#forgetpass",function() {
+      var username = $("#username").val();
+      if (username!==""){
+
+        Parse.User.requestPasswordReset(username, {
+            success: function() {
+              alert("we've sent an password resetting email to you.")
+            },
+            error: function(error) {
+              // Show the error message somewhere
+              alert("Error: " + error.code + " " + error.message);
+            }
+          });
+      }else {
+        alert("pls type in your email address and try again.")
+      }
+                   
+    });
+
+
+
+
+
+    </script>
+
+
+    <script type="text/javascript">// user logout
+     $(document).on("click", "#logout",function() {
+        Parse.User.logOut();
+        alert ("you have logged out");
+        $("#loginDiv").empty();
+
+        $("#loginDiv").append("<div class='control-group'> <label class='control-label' for='username'>Email</label> <div class='controls'> <input type='text' id='username' name='username' placeholder='' class='input-xlarge'> </div></div><div class='control-group'> <label class='control-label' for='password'>Password</label> <div class='controls'> <input type='password' id='password' name='password' placeholder='' class='input-xlarge'> </div></div><div class='control-group'> <div class='controls' style='padding-top:5px'> <button id='login' class='btn btn-success'>Login</button> &nbsp;<a id='signup'>sign up</a>&nbsp;/&nbsp;<a id='forgetpass'>forget password</a></div></div>");
+
+   //     $("#top_tags").empty();
+   //    $("#top_tags").append("<span class='glyphicon glyphicon-tags'></span>&nbsp;tags");
+
+
+
+      });
+    </script>
+
+  <script type="text/javascript"> // trello function
+
+
+      $(document).on("click", ".Trello_Lists",function(){
+         $(".Trello_Lists").css("color", "#55acee");
+         $(this).css("color", "#CE4843");
+         $(this).css("font-weight","bold");
+         Cur_Trello_List=$(this).attr('id');
+
+      });
+
+
+      $(document).on("click", ".news_dnvote",function() {
+       
+        var this_id = $(this).attr('id');
+        var thiss = $(this);
+   
+        var currentUser = Parse.User.current();
+        if (currentUser) {
+            if (!Cur_Trello_Board){
+                alert ("you have not connected your trello board. Please set it up in settings page.");
+            }else{
+                if (thiss.css("text-decoration")=="line-through") {
+                    thiss.css("text-decoration", "none");
+                    alert("It will not delete the card in your Trello - but the machine will not learn it to recommend news for you.")
+                    var mails = Parse.Object.extend("email_stats");
+                    var query2 = new Parse.Query(mails);
+                    query2.equalTo("user",currentUser.id);
+                    query2.limit(1);
+                    //query1.descending('score');
+                    query2.find({
+                          success: function(results) {
+                         
+                            var object = results[0];
+                            var news_dns = object.get('news_dns');
+                            news_dns = _.without(news_dns,this_id);
+                            object.set('news_dns',news_dns);
+                            object.save();
+                          
+                           
+                          }, 
+                          error: function(error) {
+                            alert('sorry something went wrong')
+                          }
+                    });
+                } else {
+                      Cur_Trello_List="null";
+                      var $Trello_Lists = $('<div></div>');
+                      var success_lists = function(successMsg) {
+                        for (var i=0; i<successMsg.length; i++){
+                          var strID = successMsg[i]['id'];
+                          var strName = successMsg[i]['name'];
+                          $Trello_Lists.append("<a class='Trello_Lists' id="+strID+" >"+ strName+" </a><span> ... </span> ");
+
+                        }
+                        
+    
+                  
+                        $Trello_Lists.append("<div class='searchbar1'> \n \n <input type='text' id='trello_comment' class='form-control' placeholder='your comment here'></div>");
+
+                         BootstrapDialog.show({
+                            title: 'choose the list you want to save to: '+ cur_trello_bName,
+                            message: $Trello_Lists,
+                            buttons:[
+
+                                    {
+                                      label: 'save',
+                                      action: function(dialogRef){
+                                          if (Cur_Trello_List=="null"){
+                                            alert('please select a list');
+                                          }
+                                          else{
+
+                                              alert('saved');
+                                              dialogRef.close();
+                                              thiss.css("text-decoration", "line-through");
+
+                                              var destinationList = Cur_Trello_List;
+                                              var news0 = Parse.Object.extend("link_item");
+                                              var query0 = new Parse.Query(news0);
+                                              query0.equalTo('objectId',this_id);
+                                              query0.limit(1);
+                                              query0.find({
+                                                    success: function(results) {
+                                                      var link = results[0].get('link');
+                                                      var full_text = results[0].get('text');
+                                                      var summ = results[0].get('summ');
+                                                      var summ_text="*saved from tmdr.io*\n\n";
+                                                      var tlc = dialogRef.getModalBody().find('input').val();
+                                                    //  var tlc = $('#trello_comment').val();
+                                                     
+                                                      if (tlc){
+                                                        summ_text += "**Comments:**\n" + tlc+"\n\n";
+                                                      }
+                                                      summ_text +="**Summary:**";
+                                                      var tags = results[0].get('tags');
+                                                      var indus = results[0].get('indus');
+                                                      var ents = results[0].get('ent');
+                                                      for (var j=0; j<summ.length; j++){
+                                                          summ_text += " \n "+summ[j];
+                                                        }
+                                                      var newCard = 
+                                                      {name: results[0].get('title'), 
+                                                      desc: summ_text,
+                                                      pos: "top", 
+                                                      due: null,
+                                                      idList: destinationList
+                                                      };
+
+                                                      var success_list = function(successMsg) {
+                                                        console.log('saved to cur card '+successMsg.id);
+                                                        Cur_Trello_Card=successMsg.id
+                                                        var card_url =  '/cards/'+Cur_Trello_Card+'/actions/comments';
+                                                        Trello.post(card_url, {"text": link +"\n **full article:** \n"+full_text});
+                                                        card_url = '/cards/'+Cur_Trello_Card+'/labels';
+                                                        for (var j=0; j<tags.length; j++){    
+                                                          Trello.post(card_url,{"color":"blue","name":tags[j]});
+                                                        }
+                                                        for (var j=0; j<indus.length; j++){    
+                                                          Trello.post(card_url,{"color":"orange","name":indus[j]});
+                                                        }
+                                                        for (var j=0; j<ents.length; j++){    
+                                                          Trello.post(card_url,{"color":"green","name":ents[j]});
+                                                        }
+
+                                                      };
+
+                                                      var error_list = function(errorMsg) {
+                                                        console.log("error: " + errorMsg);
+                                                      };
+
+                                                      Trello.post('/cards/', newCard, success_list, error_list);
+                                                     
+                                                    }, 
+                                                    error: function(error) {
+                                                      alert(error.message);
+                                                    }
+                                               });
+                                          }
+ 
+
+                                          
+                                        }
+                                  
+                                    }
+
+                                    ]
+
+                         });
+
+                      };
+
+                      var error_lists = function(errorMsg) {
+                        console.log(errorMsg);
+                        alert("please connect your trello first");
+                      };
+                      var Cur_Trello_Lists = '/boards/'+Cur_Trello_Board+'/lists';
+                      Trello.get(Cur_Trello_Lists, success_lists, error_lists);
+
+                      var mails = Parse.Object.extend("email_stats");
+                      var query2 = new Parse.Query(mails);
+                      query2.equalTo("user",currentUser.id);
+                      query2.limit(1);
+                      query2.find({
+                            success: function(results) {
+                           
+                              var object = results[0];
+                              var news_dns = object.get('news_dns');
+                              news_dns.unshift(this_id);
+                              object.set('news_dns',news_dns);
+                              object.save();
+                             
+                            }, 
+                            error: function(error) {
+                              console.log('sorry something went wrong');
+                            }
+                      });
+                }
+
+            } 
+        }
+        else
+        {
+          alert("you need to log in first."); 
+        }
+       
+
+        return false; 
+
+      });
+
+      $(document).on("click", ".mail_dnvote",function() {
+       
+        var this_id = $(this).attr('id');
+       
+        var thiss = $(this);
+   
+        var currentUser = Parse.User.current();
+        if (currentUser) {
+
+            if (!Cur_Trello_Board){
+                Alert ("you have not connected your trello board. Please set it up in settings page.");
+            }else{
+                if (thiss.css("text-decoration")=="line-through") {
+                    thiss.css("text-decoration", "none");
+                    alert("It will not delete the card in your Trello - but the machine will not learn it to recommend news for you.")
+                    var mails = Parse.Object.extend("email_stats");
+                    var query2 = new Parse.Query(mails);
+                    query2.equalTo("user",currentUser.id);
+                    query2.limit(1);
+                    //query1.descending('score');
+                    query2.find({
+                          success: function(results) {
+                         
+                            var object = results[0];
+                            var mail_dns = object.get('mail_dns');
+
+                            mail_dns = _.without(mail_dns,this_id);
+                            object.set('mail_dns',mail_dns);
+                            object.save();
+                          
+                           
+                          }, 
+                          error: function(error) {
+                            alert('sorry something went wrong')
+                          }
+                    });
+                } else {
+                      Cur_Trello_List="null";
+                      var $Trello_Lists = $('<div></div>');
+                      var success_lists = function(successMsg) {
+                        for (var i=0; i<successMsg.length; i++){
+                          var strID = successMsg[i]['id'];
+                          var strName = successMsg[i]['name'];
+                          $Trello_Lists.append("<a class='Trello_Lists' id="+strID+" >"+ strName+" </a><span> ... </span> ");
+
+                        }
+                         $Trello_Lists.append("<div class='searchbar1'> \n \n <input type='text' id='trello_comment1' class='form-control' placeholder='your comment here \n'></div>");
+
+                        
+                         
+                         BootstrapDialog.show({
+                            title: 'choose the list you want to save to: '+ cur_trello_bName,
+                            message: $Trello_Lists,
+                            buttons:[
+
+                                    {
+                                      label: 'save',
+                                      action: function(dialogRef){
+                                          if (Cur_Trello_List=="null"){
+                                            alert('please select a list');
+                                          }
+                                          else{
+
+                                              alert('saved');
+                                              dialogRef.close();
+                                              thiss.css("text-decoration", "line-through");
+
+                                              var destinationList = Cur_Trello_List;
+                                              var news0 = Parse.Object.extend("email_item");
+                                              var query0 = new Parse.Query(news0);
+                                              query0.equalTo('objectId',this_id);
+                                              query0.limit(1);
+                                              query0.find({
+                                                    success: function(results) {
+                                                      var sender = results[0].get('sender');
+                                                      var full_text = results[0].get('text');
+                                                      var summ = results[0].get('summ');
+                                                      var summ_text="*saved from tmdr.io*\n\n";
+                                                      var tlc1 = dialogRef.getModalBody().find('input').val();
+                                                      //var tlc1 = $('#trello_comment1').val();
+                                                     
+                                                      if (tlc1){
+                                                        summ_text += "**Comments:**\n" + tlc1+"\n\n";
+                                                      }
+                                                      summ_text +="**Summary:**";
+                                                      var tags = results[0].get('tags');
+                                                      var indus = results[0].get('indus');
+                                                      var ents = results[0].get('ent');
+                                                      for (var j=0; j<summ.length; j++){
+                                                          summ_text += " \n "+summ[j];
+                                                        }
+                                                      var newCard = 
+                                                      {name: results[0].get('subject'), 
+                                                      desc: summ_text,
+                                                      pos: "top", 
+                                                      due: null,
+                                                      idList: destinationList
+                                                      };
+
+                                                      var success_list = function(successMsg) {
+                                                        console.log('saved to cur card '+successMsg.id);
+                                                        Cur_Trello_Card=successMsg.id
+                                                        var card_url =  '/cards/'+Cur_Trello_Card+'/actions/comments';
+                                                        Trello.post(card_url, {"text": sender +"\n **full article:** \n "+ full_text});
+                                                        card_url = '/cards/'+Cur_Trello_Card+'/labels';
+                                                        for (var j=0; j<tags.length; j++){    
+                                                          Trello.post(card_url,{"color":"blue","name":tags[j]});
+                                                        }
+                                                        for (var j=0; j<indus.length; j++){    
+                                                          Trello.post(card_url,{"color":"orange","name":indus[j]});
+                                                        }
+                                                        for (var j=0; j<ents.length; j++){    
+                                                          Trello.post(card_url,{"color":"green","name":ents[j]});
+                                                        }
+
+                                                      };
+
+                                                      var error_list = function(errorMsg) {
+                                                        console.log("error: " + errorMsg);
+                                                      };
+
+                                                      Trello.post('/cards/', newCard, success_list, error_list);
+                                                     
+                                                    }, 
+                                                    error: function(error) {
+                                                      alert(error.message);
+                                                    }
+                                               });
+                                          }
+ 
+
+                                          
+                                        }
+                                  
+                                    }
+
+                                    ]
+
+                         });
+
+                      };
+
+                      var error_lists = function(errorMsg) {
+                        console.log(errorMsg);
+                        alert("please connect your trello first");
+                      };
+                      var Cur_Trello_Lists = '/boards/'+Cur_Trello_Board+'/lists';
+                      Trello.get(Cur_Trello_Lists, success_lists, error_lists);
+
+                      var mails = Parse.Object.extend("email_stats");
+                      var query2 = new Parse.Query(mails);
+                      query2.equalTo("user",currentUser.id);
+                      query2.limit(1);
+                      query2.find({
+                            success: function(results) {
+                           
+                              var object = results[0];
+                              var mail_dns = object.get('mail_dns');
+                              mail_dns.push(this_id);
+                              object.set('mail_dns',mail_dns);
+                              object.save();
+                             
+                            }, 
+                            error: function(error) {
+                              console.log('sorry something went wrong');
+                            }
+                      });
+                }
+
+            } 
+        }
+        else
+        {
+          alert("you need to log in first."); 
+        }
+       
+
+        return false; 
+
+      });
+
+  </script>
+
+  <script type="text/javascript">
+// rebuilt search :: email_search(senders,tags,ents,indus)
+// email_search(email_array[0],data_arr[0],data_arr2[0],results[0].get['indus'][0]]);
+      function email_search(senders,tags,ents,indus){
+
+         var substringMatcher = function(strs) {
+            return function findMatches(q, cb) {
+              var matches, substringRegex;
+
+              // an array that will be populated with substring matches
+              matches = [];
+
+              // regex used to determine if a string contains the substring `q`
+              substrRegex = new RegExp(q, 'i');
+
+              // iterate through the pool of strings and for any string that
+              // contains the substring `q`, add it to the `matches` array
+              $.each(strs, function(i, str) {
+                if (substrRegex.test(str)) {
+                  matches.push(str);
+                }
+              });
+
+              cb(matches);
+            };
+            };
+
+       for (var i =0; i<senders.length; i++){
+        senders[i]='/'+senders[i];
+       }
+
+       for (var i =0; i<tags.length; i++){
+        tags[i]='#'+tags[i];
+       }
+
+      for (var i =0; i<ents.length; i++){
+        ents[i]='@'+ents[i];
+       }
+      for (var i =0; i<indus.length; i++){
+        indus[i]='$'+indus[i];
+       }
+
+
+      $("#the-basics .typeahead").typeahead("destroy");
+      $("#the-basics .typeahead").typeahead("refreshCache",[{name:'senders', source:substringMatcher(senders),templates:{header: '<h5 class="league">Senders</h5>'},AddDataset: true},{name:'tags', source:substringMatcher(tags),templates:{header: '<h5 class="league">Tags</h5>'},AddDataset: true},{name:'ents', source:substringMatcher(ents),templates:{header: '<h5 class="league">Companies</h5>'},AddDataset: true},{name:'indus', source:substringMatcher(indus),templates:{header: '<h5 class="league">Industries</h5>'},AddDataset: true}]);
+      }
+ //smart search for emails
+    
+  </script>
+
+    <script type="text/javascript"> //smart search
+    function news_search(){
+        var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+          var matches, substringRegex;
+
+          // an array that will be populated with substring matches
+          matches = [];
+
+          // regex used to determine if a string contains the substring `q`
+          substrRegex = new RegExp(q, 'i');
+
+          // iterate through the pool of strings and for any string that
+          // contains the substring `q`, add it to the `matches` array
+          $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+              matches.push(str);
+            }
+          });
+
+          cb(matches);
+        };
+        };
+
+
+        $("#the-basics .typeahead").typeahead("destroy");
+
+        var indus = ['$Technology', '$Communications', '$Financial', '$Energy', '$Non-cyc Consumer', '$Industrial', '$Cyclical Consumer', '$Basic Materials', '$Utilities'];
+
+        var tags = ['#Tech', '#Rates', '#Credit', '#Deal', '#Banking', '#Australia', '#Euro', "#Emerging Markets",'#Trading','#Equity','#Employment','#Economy','#Property','#Currency','#Commodity'];
+
+        var sites = ['/FT','/zerohedge','/Bloomberg', '/Reuters', '/New York Times', '/Sydney Morning Herald','/Australian Financial Review','/techcrunch'];
+
+        var companies =["@Apple","@Google","@Microsoft","@Berkshire","@Exxon","@Wells Fargo","@Johnson & Johnson","@Facebook","@General Electric","@Amazon.com","@JPMorgan","@Wal-Mart","@AT&T","@Pfizer","@Procter & Gamble","@Verizon","@Visa Inc","@Walt Disney","@Bank of America","@Coca-Cola","@Citigroup","@Oracle","@Gilead","@Merck & Co","@Home Depot","@Chevron","@IBM","@Comcast","@PepsiCo","@Cisco","@Intel","@Philip Morris","@Allergan","@Amgen","@CVS","@UnitedHealth","@AbbVie","@MasterCard","@Altria","@Medtronic","@Bristol-Myers","@Celgene","@NIKE","@Walgreens","@Schlumberger","@Eli Lilly","@McDonald's","@Kraft Heinz","@QUALCOMM","@3M Co","@Boeing","@United Parcel","@Goldman Sachs","@United Technologies","@Starbucks Corp","@AIG","@Honeywell","@American Express","@US Bancorp","@Union Pacific","@Biogen","@Kinder Morgan","@Mondelez","@Morgan Stanley","@Lowe's","@Lockheed","@Priceline","@Accenture","@Costco","@Danaher","@Reynolds","@Time Warner","@Express Scripts","@Simon Property","@Colgate-Palmolive","@ConocoPhillips","@MetLife","@Twenty-First Century","@Regeneron","@Occidental","@Ford Motor","@Time Warner","@BlackRock","@Thermo Fisher","@Dow Chemical","@Hewlett-Packard","@Netflix","@Duke Energy","@Target","@TJX","@Texas Instruments","@EMC","@EI du","@PNC Financial","@General Dynamics","@NextEra","@McKesson","@salesforce","@Monsanto","@Caterpillar","@General Motors","@FedEx","@Dominion","@PayPal","@Capital One","@EOG Resources","@Aetna","@Alexion","@Phillips 66","@Charles Schwab","@American Tower","@LyondellBasell","@Adobe Systems","@Kimberly-Clark","@Carnival Corp","@Cognizant","@Stryker","@Anthem","@HCA","@Prudential Financial","@Cigna","@Yum! Brands","@Anadarko","@eBay","@Avago","@Yahoo!","@CME","@Travelers Cos","@Air Products & Chemicals","@Archer-Daniels-Midland","@American Electric","@Aon","@Aflac","@Dollar General","@Under Armour","@Royal","@International Paper","@Analog Devices","@Nielsen","@Apache Corp","@Hess Corp","@Alcoa","@AGL Resources","@Airgas","@BHP","@CBA","@Westpac","@Rio Tinto","@NAB","@ANZ","@Telstra","@Wesfarmers","@CSL","@Woolworths","@Woodside","@Macquarie Bank","@Scentre","@Westfield","@QBE","@Transurban","@AMP","@Suncorp","@Amcor","@Brambles","@Sydney Airport","@Ramsay Health","@IAG","@AGL Energy","@Federation Centres","@News Corp","@Goodman","@Aurizon","@Oil Search","@ResMed","@APA","@Origin","@Stockland","@Caltex","@Crown","@Newcrest","@Sonic Healthcare","@Asciano","@Lend Lease","@South32","@CIMIC","@James Hardie","@GPT","@ASX","@TPG Telecom","@Qantas","@Dexus Property","@Coca-Cola","@Medibank","@Mirvac","@Henderson Group","@Fortescue","@Incitec","@Orica","@Computershare","@REA","@Tatts","@Spark","@Aristocrat","@Santos","@Bendigo & Adelaide","@DUET","@Harvey Norman","@Cochlear","@Bank of Queensland","@Healthscope","@AusNet","@Fletcher","@Boral","@seek.com","@Challenger","@Echo Entertainment","@Platinum Asset Management","@Treasury Wine","@Tabcorp","@Alumina","@Flight Centre","@Fisher & Paykel Healthcare","@Domino's","@Ansell","@Magellan","@Iluka","@BT Investment","@Spark Infrastructure","@Orora","@IOOF","@BlueScope","@carsales.com","@Fairfax","@Perpetual","@JB Hi-Fi","@Nufarm","@Genworth","@Alphabet","@Abbott Laboratories","@Du Pont","@Salesforce","@Schwab Charlse","@Public Storage","@Southern Co","@Delta Air Lines","@Kroger Co","@Automatic Data Process","@Raytheon","@Ace Ltd","@Broadcom","@Valero Energy","@Ecolab","@Northrop Grumman","@Illinois Tool Works","@Halliburton","@Becton Dickinson","@Estee Lauder","@Precision Castparts","@Monster Beverage","@Emerson Electric","@Praxair","@Vertex Pharmaceuticals","@Southwest Airlines","@Chubb Corp","@BB&T","@Marsh & Mclennan","@Cardinal Health","@Crown Castle","@L Brands","@Equity Residential","@Marathon Petroleum","@State Street","@Activision Blizzard","@Intercontinental Exchange","@Constellation Brands","@PPG Industries","@VF","@Illumina","@Hewlett Packard","@Norfolk Southern","@Synchrony Financial","@Intuit","@Deere & Co","@Mcgraw Hill Financial","@Humana","@Mylan","@O'Reilly Automotive","@Baxalta","@P G & E Corp","@Kellogg","@Boston Scientific","@Sherwin-Williams","@Te Connectivity","@Exelon","@Allstate","@CSX","@Eaton","@Avalonbay Communitie","@Autozone","@Delphi Automotive","@Discover Financial Services","@Waste Management","@Franklin Resources","@Sysco","@CBS Corp","@Sempra Energy","@Zoetis","@Baker Hughes","@Welltower","@PPL Corp","@HP Inc","@Prologis","@Ross Stores","@Suntrust Banks","@Pioneer Natural Resources","@M & T Bank","@Williams Cos Inc","@Perrigo Co Plc","@Applied Materials","@Fiserv Inc","@Tyson Foods","@Brown-Forman","@Amerisourcebergen","@Corning","@Electronic Arts","@Cerner Corp","@Hormel Foods","@Zimmer Biomet Holdings","@Baxter International","@Moody'S","@Intuitive Surgical","@Edison International","@Paychex","@Public Service Enterprise","@Ameriprise Financial","@Level 3 Communications","@Hershey","@Boston Properties","@Roper Technologies","@Hartford Financial","@T Rowe Price","@Discovery Communications","@Omnicom","@Vornado","@Equinix","@Progressive Corp","@Consolidated Edison","@Chipotle Mexican Grill","@Ventas","@Fidelity National Info","@Edwards Lifesciences","@Xcel Energy","@Nvidia","@Viacom","@Marriott International","@Conagra Foods","@St Jude Medical","@Molson Coors Brewing","@Paccar Inc","@Dr Pepper Snapple Group","@Alliance Data Systems","@Northern Trust","@Campbell Soup","@Amphenol Corp","@HCP Inc","@Clorox Company","@Skyworks Solutions","@Expedia Inc","@Stanley Black & Decker","@Altera Corp","@Fifth Third Bancorp","@Spectra Energy Corp","@Cummins","@Weyerhaeuser","@Micron Technology","@Eversource Energy","@Mead Johnson Nutrition","@Republic Services Inc","@Wec Energy Group","@Sandisk","@Essex Property Trust","@Davita Healthcare","@Devon Energy","@Jm Smucker","@Red Hat","@Western Digital","@Noble Energy","@Ingersoll-Rand","@Centurylink","@Autodesk","@Dte Energy","@Mohawk Industries","@Tyco International","@Invesco","@Principal Financial Group","@Rockwell Automation","@Agilent Technologies","@Cr Bard","@Symantec","@Loews Corp","@Firstenergy","@Keurig Green Mountain","@Parker Hannifin","@Genuine Parts","@Equifax","@Lincoln National Corp","@Endo International","@Nucor Corp","@Verisk Analytics","@Henry Schein","@Ametek","@Tesoro","@Newell Rubbermaid","@Vulcan Materials","@National Oilwell Varco","@Lam Research","@Regions Financial","@Laboratory Corp","@Macerich Co","@Cameron International Corp","@Xilinx","@Motorola Solutions","@Realty Income","@WW Grainger","@Westrock Co","@CA Inc","@Tripadvisor","@Host Hotels & Resorts","@Universal Health Services","@Macy'S","@Hanesbrands","@Tractor Supply","@Carmax Inc","@Rockwell Collins","@Dr Horton Inc","@CBRE Group","@Entergy Corp","@Citrix Systems","@Fastenal Co","@Starwood Hotels & Resorts","@Whirlpool Corp","@Textron Inc","@Sl Green Realty","@Xl Group","@Advance Auto Parts","@Juniper Networks","@Mccormick & Co","@Keycorp","@Seagate","@Mosaic Co","@Whole Foods Market","@Kla-Tencor","@Gap Inc","@Waters Corp","@Linear Technology","@Best Buy","@Kimco Realty","@Nordstrom","@Harris Corp","@Newmont Mining","@Eastman Chemical","@Total System Services","@Xerox","@Verisign","@Ameren Corporation","@Lennar Corp","@Cimarex Energy","@Marathon Oil","@Stericycle","@Ralph Lauren","@Cintas Corp","@Snap-On","@Cf Industries Holdings","@Tiffany & Co","@Dover Corp","@Cincinnati Financial","@Ball Corp","@Quest Diagnostics","@Masco Corp","@Signet Jewelers","@CMS Energy","@Western Union","@Akamai Technologies","@Martin Marietta Materials","@Intl Flavors & Fragrances","@Pentair Plc","@L-3 Communications","@Interpublic Group Of Cos","@Borgwarner","@Nasdaq Inc","@Microchip Technology","@Kohl's Corp","@Goodyear Tire & Rubber","@Affiliated Managers","@Bed Bath & Beyond","@Huntington Bancshares","@Harley-Davidson","@Netapp Inc","@Expeditors Intl Wash","@E*Trade","@C.H. Robinson Worldwide","@Wyndham Worldwide","@Mattel Inc","@Sealed Air","@Coach Inc","@Unum Group","@Hasbro","@Dentsply International","@Plum Creek Timber","@JB Hunt Transport","@Freeport-Mcmoran","@Cablevision Systems","@Mallinckrodt","@Kansas City Southern","@Scana Corp","@News Corp","@Qorvo","@EQT Corp","@Michael Kors","@H&R Block","@Varian Medical Systems","@Comerica Inc","@Columbia Pipeline","@Darden Restaurants","@Torchmark Corp","@Cabot Oil & Gas","@Scripps Networks","@Garmin Ltd","@F5 Networks","@Autonation Inc","@FMC Technologies","@Centerpoint Energy","@Wynn Resorts","@Pinnacle West Capital","@Harman International","@Pepco Holdings","@Xylem","@Staples Inc","@Fluor Corp","@Robert Half","@PVH Corp","@Pultegroup","@Leucadia National","@Allegion","@Teco Energy Inc","@AES","@Nisource","@Newfield Exploration","@Apartment Invt","@Tegna","@Leggett & Platt","@Avery Dennison","@Zions Bancorporation","@Frontier Communications","@Helmerich & Payne","@Iron Mountain","@PerkinElmer","@Assurant Inc","@ADT Copr","@Flowserve Corp","@First Solar","@FMC Corp","@Jacobs Engineering","@People'S United Financial","@Transocean","@Oneok Inc","@CSRA Inc","@Patterson Cos","@Legg Mason","@Navient Corp","@Range Resources","@Flir Systems","@Murphy Oil","@Pitney Bowes","@Teradata","@Dun & Bradstreet","@Ensco PLC","@Gamestop Corp","@NRG Energy","@Quanta Services","@Tenet Healthcare","@Ryder System","@Chesapeake Energy","@Owens-Illinois","@Diamond Offshore Drilling","@Urban Outfitters","@Southwestern Energy","@Fossil Group","@Consol Energy"];
+
+
+
+     
+        $('#the-basics .typeahead').typeahead({
+            highlight: true
+          },
+          {
+            name: 'tags',
+          
+            source: substringMatcher(tags),
+            templates: {
+              header: '<h5 class="league">Hashtags</h5>'
+            }
+          },
+          {
+            name: 'indus',
+          
+            source: substringMatcher(indus),
+            templates: {
+              header: '<h5 class="league">Industry</h5>'
+            }
+          },
+          {
+           name: 'companies',
+           
+            source: substringMatcher(companies),
+            templates: {
+              header: '<h5 class="league">Companies</h5>'
+            }
+          },
+          {
+            name: 'sites',
+           
+            source: substringMatcher(sites),
+            templates: {
+              header: '<h5 class="league">Sources</h5>'
+            }
+          }
+          );
+
+    }
+     
+    </script>
+
+
+
+   <script>//email methods (read more, up&down vote)
+    $(document).on("click", ".fullemail",function() {
+        var this_id = $(this).attr('id');
+        var thiss = $(this);
+        var mails = Parse.Object.extend("email_item");
+        var query2 = new Parse.Query(mails);
+        query2.equalTo("objectId",this_id);
+        query2.limit(1);
+        //query1.descending('score');
+        query2.find({
+              success: function(results) {
+                var title = results[0].get('subject');
+                var clean = results[0].get('clean_text');
+                var html = results[0].get('html');
+               // var wnd = window.open("about:blank", "", "_blank");
+               // wnd.document.write(html);
+
+                var iframe = document.createElement('iframe');
+                //var html = '<body>Foo</body>';
+                iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+                // eModal.iframe(html, title)
+                iframe.style="position: absolute; height: 100%; width:100%; border: none";
+            
+                BootstrapDialog.show({
+                  title: title,
+                  message: html,
+                  buttons: [
+                  {
+                      label: 'full email',
+                      action: function(dialog) {
+                          dialog.setMessage(html);
+                      }
+                  },
+
+                  {
+                      label: 'cleaned email',
+                      action: function(dialog) {
+                          dialog.setMessage(clean);
+                      }
+                  }, {
+                    label: 'Close',
+                    action: function(dialogItself){
+                        dialogItself.close();
+                    }
+                  }]
+              });
+
+              
+
+              },
+              error: function(error) {
+                alert('sorry cannnot open full email.')
+              }
+        });
+
+ 
+        //$(this).next().append(fullemail);
+
+        return false; 
+
+    });
+
+    $(document).on("click", ".mail_upvote",function() {
+       
+        var this_id = $(this).attr('id');
+        var thiss = $(this);
+  
+        var currentUser = Parse.User.current();
+        
+        if (thiss.css("text-decoration")== "line-through"){
+            thiss.css("text-decoration","none");
+                var mails = Parse.Object.extend("email_stats");
+                var query2 = new Parse.Query(mails);
+                query2.equalTo("user",currentUser.id);
+                query2.limit(1);
+                //query1.descending('score');
+                query2.find({
+                      success: function(results) {
+                        
+                        var object = results[0];
+                        var mail_ups = object.get('mail_ups');
+                       
+                        mail_ups=_.without(mail_ups,this_id);
+                        object.set('mail_ups',mail_ups);
+                        object.save();
+                        
+                       
+                      }, 
+                      error: function(error) {
+                        alert('sorry something went wrong')
+                      }
+                });
+
+        }else {
+              thiss.css("text-decoration", "line-through");
+              var mails = Parse.Object.extend("email_stats");
+              var query2 = new Parse.Query(mails);
+              query2.equalTo("user",currentUser.id);
+              query2.limit(1);
+              //query1.descending('score');
+              query2.find({
+                    success: function(results) {
+                      
+                      var object = results[0];
+                      var mail_ups = object.get('mail_ups');
+                     
+                      mail_ups.push(this_id);
+                      object.set('mail_ups',mail_ups);
+                      object.save();
+                      
+                     
+                    }, 
+                    error: function(error) {
+                      alert('sorry something went wrong')
+                    }
+              });
+        }
+
+        return false; 
+
+    });
+
+   </script>
+
+   <script type="text/javascript"> // news methods (up&down vote)
+   $(document).on("click", ".news_upvote",function() {
+       
+        var this_id = $(this).attr('id');
+        var thiss = $(this);
+  
+         var currentUser = Parse.User.current();
+              if (currentUser) {
+                  if (thiss.css("text-decoration")=="line-through") {
+                      
+                      thiss.css("text-decoration", "none");
+                      var mails = Parse.Object.extend("email_stats");
+                      var query2 = new Parse.Query(mails);
+                      query2.equalTo("user",currentUser.id);
+                      query2.limit(1);
+                      //query1.descending('score');
+                      query2.find({
+                            success: function(results) {
+                           
+                              var object = results[0];
+                              var news_ups = object.get('news_ups');
+                              news_ups = _.without(news_ups,this_id);
+                              object.set('news_ups',news_ups);
+                              object.save();
+                            
+                             
+                            }, 
+                            error: function(error) {
+                              alert('sorry something went wrong')
+                            }
+                      });
+                   
+
+
+                  } else {
+                    thiss.css("text-decoration", "line-through");
+                    var mails = Parse.Object.extend("email_stats");
+                    var query2 = new Parse.Query(mails);
+                    query2.equalTo("user",currentUser.id);
+                    query2.limit(1);
+                    //query1.descending('score');
+                    query2.find({
+                          success: function(results) {
+                         
+                            var object = results[0];
+                            var news_ups = object.get('news_ups');
+                            news_ups.unshift(this_id);
+                            object.set('news_ups',news_ups);
+                            object.save();
+                           
+                          }, 
+                          error: function(error) {
+                            alert('sorry something went wrong')
+                          }
+                    });
+                  }
+
+              } else
+              {
+                alert("you need to log in first."); 
+              }
+             
+
+              return false; 
+
+    });
+
+    $(document).on("click", ".news_slack",function() {
+    
+        var this_id = $(this).attr('id');
+        var thiss = $(this);
+        var currentUser = Parse.User.current();
+        if (currentUser) {
+            if (!cur_slack_channel){
+                alert ("you have not connected your channel. Please set it up in settings page.");
+            }else{
+
+                if (thiss.css("text-decoration")=="line-through") {
+                    alert("you have already shared this news in Slack.");
+                } else {
+                      var $slack_list = $('<div></div>');
+                      $slack_list.append("<div class='searchbar1'> \n \n <input type='text' id='slack_comment' class='form-control' placeholder='your comment here'></div>");
+                         BootstrapDialog.show({
+                            title: 'you will share this news to this channel: '+cur_slack_channel,
+                            message: $slack_list,
+                            buttons:[
+                                      {
+                                        label: 'save',
+                                        action: function(dialogRef){
+                                                alert('shared to slack');
+                                                dialogRef.close();
+                          
+                                                var news0 = Parse.Object.extend("link_item");
+                                                var query0 = new Parse.Query(news0);
+                                                query0.equalTo('objectId',this_id);
+                                                query0.limit(1);
+                                                query0.find({
+                                                      success: function(results) {
+                                                        var source = results[0].get('name');
+                                                        var link = results[0].get('link');
+                                                        var title = results[0].get('title');
+                                                        var summ = results[0].get('summ');
+                                                        var summ_text="";
+                                                        for (var j=0; j<summ.length; j++){
+                                                            summ_text += " \n - "+summ[j];
+                                                        }
+                                                        var sents = results[0].get('sentiment');    
+                                                        var sents_col = "#439FE0";
+                                                        if (sents=="bearish"){sents_col="danger";}      
+                                                        if (sents=="bullish"){sents_col="good";}      
+                                                        var tags = results[0].get('tags');
+                                                        var indus = results[0].get('indus');
+                                                        var ents = results[0].get('ent');
+                                                        var tag_text="";
+                                                        for (var j=0; j<tags.length; j++){
+                                                            tag_text += "$"+tags[j]+"  ";
+                                                        }
+                                                        for (var j=0; j<indus.length; j++){
+                                                            tag_text += "$"+indus[j]+"  ";
+                                                        }
+                                                        for (var j=0; j<ents.length; j++){
+                                                            tag_text += "$"+ents[j]+"  ";
+                                                        }
+                                                        var comment = dialogRef.getModalBody().find('input').val();
+                                                        comment = "*"+comment+"*";
+
+                                                        var payload={"token":cur_slack_token, "channel": cur_slack_channel, "text": comment, "icon_emoji": ":ghost:", "attachments":[
+                                                                {
+                                                                  "fallback": title +":  "+link,
+                                                                  "pretext":"news shared by "+ cur_slack_user,
+                                                                  "color":sents_col,
+                                                                   // green for bearish #7CD197 normal for #439FE0
+                                                                   "author_name": source,
+                                                                   "author_link": link,
+                                                                   "title": title,
+                                                                   "title_link": link,
+                                                                   "fields":[
+
+                                                                       {   
+                                                                       "title": "Feature Tags",
+                                                                       "value":tag_text,
+                                                                       "short":false
+
+                                                                       },
+
+
+                                                                       {
+                                                                       "title": "News Summary",
+                                                                       "value":summ_text,
+                                                                       "short":false
+                                                                        }
+
+                                                                   ]
+                                                                   
+                                                            
+                                                            
+                                                                }
+                                                          ]
+                                                        }; 
+
+                                                        var slack_url =cur_slack_iw_url;     
+
+                                                        $.ajax
+                                                              ({
+                                                                  type: "POST",
+                                                                  url: slack_url,
+                                                                  dataType: 'json',
+                                                                 // async: false,
+                                                                  data: JSON.stringify(payload),
+                                                                  success: function () {
+                                                                  console.log("saved to slack"); 
+                                                                  }
+                                                              });
+                                                        thiss.css("text-decoration", "line-through");
+
+                                                      }, 
+                                                      error: function(error) {
+                                                        alert(error.message);
+                                                      }
+                                                });
+                                        }
+                           
+                                      }
+                                    ]
+
+                         });
+
+                }
+
+            }
+
+        } 
+        else
+        {
+          alert("you need to log in first."); 
+        }
+      
+    });
+
+    $(document).on("click",".slack_conn",function(){
+      if (email_stats_id=="null"){
+        alert("please log in first.");
+
+      }else{
+          var this_href="https://slack.com/oauth/authorize?scope=incoming-webhook&client_id=2541635790.16974696114&state="+email_stats_id;
+         console.log(this_href);
+        window.location.href = this_href;
+      }
+
+    })
+    
+        
+
+ 
+
+
+</script>
+
+
+
+ -->
+  </body>
+</html>

@@ -1,0 +1,106 @@
+{% extends 'news/base.html' %}
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <h2>My News</h2>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Example row of columns -->
+  {% for row in rows %}
+    <div class="col-md-6">
+      {% for entry in row %}
+      
+      <h2>{{entry.title}}</h2>
+
+
+      <h2><a href="{{entry.url}}" title="">{{ entry.title }}</a></h2>
+
+
+
+      <p>{{entry.description | safe}}</p>
+      <p><a href="{{entry.url}}" target="_blank" class="btn btn-primary">View Details</a></p>
+      {% endfor %}
+    </div>
+
+  {% endfor %}
+
+
+
+
+
+
+
+
+
+<ul class="pagination">
+  <li>
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">
+        prev
+      </a>
+    {% else %}
+      <span>prev</span>
+    {% endif %}
+  </li>
+
+  {% for page_number in paginator.page_range %}
+    {% if page_number = page_obj.number %}
+      <li class="active">
+        <span>{{ page_number }}</span>
+      </li>
+    {% else %}
+      <li>
+        <a href="?page={{ page_number }}">
+          {{ page_number }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+
+
+  <li>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">
+        next
+      </a>
+    {% else %}
+      <span>next</span>
+    {% endif %}
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  
+</div> <!-- /container -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
